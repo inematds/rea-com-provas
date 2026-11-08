@@ -153,7 +153,7 @@
 
 <section id="resumo" class="resumo"><div class="wrap">
   <span class="chip">Em resumo</span>
-  <p>O <strong>REA com provas</strong> é um kit aberto e gratuito para quem usa um agente de IA (Claude Code, Codex ou o harness dsh) para estudar um app e fazer a própria versão. O problema: o agente diz que entendeu como o app funciona e inventa o que não viu. O kit traz 4 regras, 3 pedidos prontos (painel de agentes, reator de leads e site refeito) e um conferidor em Python que reprova o arquivo de provas quando falta prova. Para usar, você precisa de Python 3 e de um agente de IA no terminal.</p>
+  <p>O <strong>REA com provas</strong> é um kit aberto e gratuito para quem usa um agente de IA (Claude Code, Codex ou o harness dsh) para estudar um app e fazer a própria versão. REA vem de <em>Reverse Engineer Anything</em>, uma ferramenta aberta de engenharia reversa: entender como um programa foi feito olhando o que já está pronto. O problema: o agente diz que entendeu como o app funciona e inventa o que não viu. O kit traz 4 regras, 3 pedidos prontos (painel de agentes, reator de leads e site refeito) e um conferidor em Python que reprova o arquivo de provas quando falta prova. Para usar, você precisa de Python 3 e de um agente de IA no terminal.</p>
 </div></section>
 
 <section id="aviso" style="padding:34px 0"><div class="wrap">
@@ -242,11 +242,11 @@
   <p class="sub">Um arquivo Python, só biblioteca padrão, sem internet. Lê o provas.md e devolve nota de 0 a 10, APROVADO ou REPROVADO e a lista do que falta. Sai com código 0 (aprovado), 1 (reprovado) ou 2 (não conseguiu ler).</p>
   <div class="grid g2">
     <div class="card"><h3>Reprova quando</h3>
-      <ul><li>falta a seção "O que NÃO deu para provar" (ou ela está vazia);</li><li>uma conclusão não cita arquivo/trecho (ex.: <code>src/arquivo.ts:40-62</code>);</li><li>todas as referências apontam para bibliotecas (node_modules, vendor, site-packages…).</li></ul></div>
+      <ul><li>falta a seção "O que NÃO deu para provar" (ou ela está vazia);</li><li>uma conclusão não cita arquivo/trecho (ex.: <code>src/arquivo.ts:40-62</code>);</li><li>todas as referências apontam para bibliotecas (node_modules, vendor, site-packages, dist, build, arquivos .min.js…).</li></ul></div>
     <div class="card"><h3>Avisa (sem reprovar) quando</h3>
       <ul><li>a prova não diz a linha;</li><li>uma conclusão só cita biblioteca, mas outras citam o app;</li><li>falta a linha "Licença:" na seção "Alvo";</li><li>o título ainda tem [colchetes] do modelo.</li></ul></div>
   </div>
-  <p class="sub" style="margin:1.6em 0 .8em">O exemplo ruim do repositório, conferido:</p>
+  <p class="sub" style="margin:1.6em 0 .8em">O exemplo ruim do repositório, conferido (o conferidor responde em português):</p>
 <pre><span class="k">python3 confere_provas.py exemplos/provas-ruim.md</span>
 <span class="bad">NOTA 0/10 — REPROVADO</span>
 Conclusões: 4 · com prova no código do app: 0
@@ -270,7 +270,7 @@ Avisos (não reprova, mas melhore):
   <p class="sub">O conferidor roda em qualquer computador com Python. O REA é opcional: ajuda o agente a enxergar apps e sites por dentro.</p>
   <div class="grid g3">
     <div class="card"><h3>Python 3.8 ou mais novo</h3><p>Para o conferidor e os testes. Confira:</p><pre>python3 --version</pre></div>
-    <div class="card"><h3>Um agente de IA no terminal</h3><p>Claude Code, Codex ou o harness dsh. Qualquer um que leia arquivos e rode comandos na pasta.</p></div>
+    <div class="card"><h3>Um agente de IA no terminal</h3><p>Claude Code, Codex ou o harness dsh (um agente de código que roda no seu computador). Qualquer um que leia arquivos e rode comandos na pasta.</p></div>
     <div class="card"><h3>REA (opcional)</h3><p>A instalação do REA, do harness e de um modelo aberto está em outro guia, passo a passo:</p><p style="margin-top:.6em"><a href="https://inematds.github.io/rea-sem-travas/guia/" target="_blank" rel="noopener">REA sem travas — guia de instalação →</a></p></div>
   </div>
 </div></section>
@@ -282,8 +282,9 @@ Avisos (não reprova, mas melhore):
 
   <div class="step"><div class="b">1</div><div>
     <h3>Baixe o kit</h3>
-    <p>Clona o repositório e confere que o conferidor funciona.</p>
-<pre><span class="k">git clone https://github.com/inematds/rea-com-provas.git</span>
+    <p>Clona o repositório na sua pasta pessoal e confere que o conferidor funciona. Os passos seguintes usam esse caminho.</p>
+<pre><span class="k">cd ~</span>   <span class="c"># o kit fica na sua pasta pessoal: ~/rea-com-provas</span>
+<span class="k">git clone https://github.com/inematds/rea-com-provas.git</span>
 <span class="k">cd rea-com-provas</span>
 <span class="k">python3 -m unittest discover tests</span>   <span class="c"># deve terminar com OK</span></pre>
   </div></div>

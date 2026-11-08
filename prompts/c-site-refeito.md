@@ -58,7 +58,7 @@ Regras do mapa:
    "### C1. ..." e, em cada uma, "Prova:" = `site-linhas.html:linha` (ou o campo do
    rea-pagina.json) e "Trecho:", e a seção "## O que NÃO deu para provar"
    (ex.: o que só aparece depois de login ou de rolar a página).
-4. Rode: python3 [caminho]/confere_provas.py provas.md — até sair APROVADO.
+4. Rode: python3 ~/rea-com-provas/confere_provas.py provas.md — até sair APROVADO.
 Pare aqui e me mostre o mapa e o resultado do conferidor.
 
 FASE 2 — A VERSÃO PREMIUM (só depois que eu disser "pode construir")
@@ -75,4 +75,4 @@ No fim, me diga como abrir, o que mudou em relação ao site atual e o que ficou
 
 ---
 
-**Conferir:** `python3 confere_provas.py provas.md` tem de sair `APROVADO` antes da fase 2.
+**Conferir:** `python3 ~/rea-com-provas/confere_provas.py provas.md` (o kit clonado na sua pasta pessoal, como no passo 1 do guia) tem de sair `APROVADO` antes da fase 2.

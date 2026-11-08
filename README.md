@@ -61,12 +61,12 @@ Quem faz: 🧠 você (com o agente aberto) · ⚙️ script · 🤖 agente de IA
 
 | # | Passo | Comando | Quem |
 |---|---|---|---|
-| 1 | Baixar o kit e rodar os testes | `git clone https://github.com/inematds/rea-com-provas.git && cd rea-com-provas && python3 -m unittest discover tests` | ⚙️ |
+| 1 | Baixar o kit e rodar os testes | `cd ~ && git clone https://github.com/inematds/rea-com-provas.git && cd rea-com-provas && python3 -m unittest discover tests` | ⚙️ |
 | 2 | (Opcional) Instalar REA + harness | guia https://inematds.github.io/rea-sem-travas/guia/ | 🧠 |
 | 3 | Escolher o alvo e conferir a licença | `cat ~/estudo/app/LICENSE` | 🧠 |
 | 4 | Preencher o brief de design | `cp brief/MODELO-brief-design.md ~/estudo/brief.md` | 🧠 |
 | 5 | Colar uma construção de `prompts/` no agente (fase 1: estudar) | `cd ~/estudo && claude` (ou `codex`) | 🧠 → 🤖 |
-| 6 | Agente entrega o `provas.md` e roda o conferidor até APROVADO | `python3 confere_provas.py provas.md` | 🤖 + ⚙️ |
+| 6 | Agente entrega o `provas.md` e roda o conferidor até APROVADO | `python3 ~/rea-com-provas/confere_provas.py provas.md` | 🤖 + ⚙️ |
 | 7 | Conferir 2 ou 3 provas à mão e liberar | escrever `pode construir` | 🧠 |
 | 8 | Agente constrói a sua versão (fase 2) | — | 🤖 |
 | 9 | Abrir, testar e pedir ajustes | abrir o `index.html` gerado | 🧠 |

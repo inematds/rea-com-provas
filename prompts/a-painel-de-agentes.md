@@ -35,7 +35,7 @@ Regras do estudo:
    e "Trecho:" copiado do arquivo, e a seção "## O que NÃO deu para provar".
 4. Não escreva nenhuma conclusão sem arquivo e linha. Se você acha, mas não achou no
    código, vai para "O que NÃO deu para provar".
-5. Rode: python3 [caminho]/confere_provas.py provas.md
+5. Rode: python3 ~/rea-com-provas/confere_provas.py provas.md
    Se sair REPROVADO, corrija o provas.md e rode de novo até sair APROVADO.
 Pare aqui e me mostre o resultado do conferidor.
 
@@ -66,4 +66,4 @@ Regras da construção:
 
 ---
 
-**Conferir:** `python3 confere_provas.py provas.md` tem de sair `APROVADO` antes da fase 2.
+**Conferir:** `python3 ~/rea-com-provas/confere_provas.py provas.md` (o kit clonado na sua pasta pessoal, como no passo 1 do guia) tem de sair `APROVADO` antes da fase 2.

@@ -153,7 +153,7 @@
 
 <section id="resumo" class="resumo"><div class="wrap">
   <span class="chip">In short</span>
-  <p><strong>REA with proof</strong> is an open, free kit for anyone who uses an AI agent (Claude Code, Codex, or the dsh harness) to study an app and build their own version. The problem: the agent says it understands how the app works and makes up what it hasn’t seen. The kit includes 4 rules, 3 ready-made prompts (agent dashboard, lead reactor, and rebuilt site), and a checker in Python that rejects the evidence file when proof is missing. To use it, you need Python 3 and an AI agent in the terminal.</p>
+  <p><strong>REA with proof</strong> it's an open, free toolkit for people who use an AI agent (Claude Code, Codex, or the dsh harness) to study an app and build their own version. REA stands for <em>Reverse Engineer Anything</em>, an open reverse engineering tool: understanding how a program was made by looking at what's already built. The problem: the agent says it understands how the app works and makes up things it hasn't seen. The toolkit includes 4 rules, 3 ready-to-use prompts (agent dashboard, lead reactor, and rebuilt website), and a Python checker that rejects the evidence file when proof is missing. To use it, you need Python 3 and an AI agent in the terminal.</p>
 </div></section>
 
 <section id="aviso" style="padding:34px 0"><div class="wrap">
@@ -242,11 +242,11 @@
   <p class="sub">A Python file that uses only the standard library and doesn’t need internet access. Reads provas.md and returns a score from 0 to 10, APROVADO or REPROVADO, and a list of what’s missing. Exits with code 0 (approved), 1 (rejected), or 2 (couldn’t read the file).</p>
   <div class="grid g2">
     <div class="card"><h3>Rejects when</h3>
-      <ul><li>the section "O que NÃO deu para provar" is missing (or empty);</li><li>a conclusion doesn’t cite a file or excerpt (for example, <code>src/arquivo.ts:40-62</code>);</li><li>all references point to libraries (node_modules, vendor, site-packages…).</li></ul></div>
+      <ul><li>the section "O que NÃO deu para provar" is missing (or empty);</li><li>a conclusion doesn’t cite a file or excerpt (for example, <code>src/arquivo.ts:40-62</code>);</li><li>all references point to libraries (node_modules, vendor, site-packages, dist, build, .min.js files…).</li></ul></div>
     <div class="card"><h3>Warns (without rejecting) when</h3>
       <ul><li>the evidence doesn’t include the line number;</li><li>one conclusion cites only a library, but others cite the app;</li><li>the line "Licença:" is missing from the "Alvo" section;</li><li>the title still has [brackets] from the template.</li></ul></div>
   </div>
-  <p class="sub" style="margin:1.6em 0 .8em">The repository’s bad example, checked:</p>
+  <p class="sub" style="margin:1.6em 0 .8em">The repository's bad example, checked (the checker responds in Portuguese):</p>
 <pre><span class="k">python3 confere_provas.py exemplos/provas-ruim.md</span>
 <span class="bad">NOTA 0/10 — REPROVADO</span>
 Conclusões: 4 · com prova no código do app: 0
@@ -270,7 +270,7 @@ Avisos (não reprova, mas melhore):
   <p class="sub">The checker runs on any computer with Python. REA is optional: it helps the agent see inside apps and websites.</p>
   <div class="grid g3">
     <div class="card"><h3>Python 3.8 or newer</h3><p>For the checker and tests. Check:</p><pre>python3 --version</pre></div>
-    <div class="card"><h3>An AI agent in the terminal</h3><p>Claude Code, Codex, or the dsh harness. Any one that can read files and run commands in the folder.</p></div>
+    <div class="card"><h3>An AI agent in the terminal</h3><p>Claude Code, Codex, or the dsh harness (a coding agent that runs on your computer). Any of them can read files and run commands in the folder.</p></div>
     <div class="card"><h3>REA (optional)</h3><p>REA, the harness, and an open model are installed in another step-by-step guide:</p><p style="margin-top:.6em"><a href="https://inematds.github.io/rea-sem-travas/guia/" target="_blank" rel="noopener">REA without restrictions — installation guide →</a></p></div>
   </div>
 </div></section>
@@ -282,8 +282,9 @@ Avisos (não reprova, mas melhore):
 
   <div class="step"><div class="b">1</div><div>
     <h3>Download the kit</h3>
-    <p>Clones the repository and checks that the checker works.</p>
-<pre><span class="k">git clone https://github.com/inematds/rea-com-provas.git</span>
+    <p>Clone the repository into your home folder and check that the checker works. The following steps use this path.</p>
+<pre><span class="k">cd ~</span>   <span class="c"># the toolkit goes in your home folder: ~/rea-com-provas</span>
+<span class="k">git clone https://github.com/inematds/rea-com-provas.git</span>
 <span class="k">cd rea-com-provas</span>
 <span class="k">python3 -m unittest discover tests</span>   <span class="c"># should end with OK</span></pre>
   </div></div>

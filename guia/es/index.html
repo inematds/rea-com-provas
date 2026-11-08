@@ -153,7 +153,7 @@
 
 <section id="resumo" class="resumo"><div class="wrap">
   <span class="chip">En resumen</span>
-  <p><strong>REA con pruebas</strong> es un kit abierto y gratuito para quienes usan un agente de IA (Claude Code, Codex o el harness dsh) para estudiar una app y crear su propia versión. El problema: el agente dice que entendió cómo funciona la app e inventa lo que no vio. El kit incluye 4 reglas, 3 pedidos listos (panel de agentes, reactor de leads y sitio rehecho) y un verificador en Python que reprueba el archivo de pruebas cuando faltan pruebas. Para usarlo, necesita Python 3 y un agente de IA en la terminal.</p>
+  <p><strong>REA con pruebas</strong> es un kit abierto y gratuito para quienes usan un agente de IA (Claude Code, Codex o el harness dsh) para estudiar una app y hacer su propia versión. REA viene de <em>Reverse Engineer Anything</em>, una herramienta abierta de ingeniería inversa: entender cómo se hizo un programa mirando lo que ya está hecho. El problema: el agente dice que entendió cómo funciona la app e inventa lo que no vio. El kit trae 4 reglas, 3 pedidos listos (panel de agentes, reactor de leads y sitio rehecho) y un verificador en Python que reprueba el archivo de pruebas cuando falta evidencia. Para usarlo, necesitas Python 3 y un agente de IA en la terminal.</p>
 </div></section>
 
 <section id="aviso" style="padding:34px 0"><div class="wrap">
@@ -242,11 +242,11 @@
   <p class="sub">Un archivo Python, solo con la biblioteca estándar y sin internet. Lee el provas.md y devuelve una nota de 0 a 10, APROVADO o REPROVADO y la lista de lo que falta. Sale con el código 0 (aprobado), 1 (reprobado) o 2 (no se pudo leer).</p>
   <div class="grid g2">
     <div class="card"><h3>Reprueba cuando</h3>
-      <ul><li>falta la sección "O que NÃO deu para provar" (o está vacía);</li><li>una conclusión no cita un archivo o fragmento (por ejemplo: <code>src/arquivo.ts:40-62</code>);</li><li>todas las referencias apuntan a bibliotecas (node_modules, vendor, site-packages…).</li></ul></div>
+      <ul><li>falta la sección "O que NÃO deu para provar" (o está vacía);</li><li>una conclusión no cita un archivo o fragmento (por ejemplo: <code>src/arquivo.ts:40-62</code>);</li><li>todas las referencias apuntan a bibliotecas (node_modules, vendor, site-packages, dist, build, archivos .min.js…).</li></ul></div>
     <div class="card"><h3>Avisa (sin reprobar) cuando</h3>
       <ul><li>la prueba no indica la línea;</li><li>una conclusión solo cita una biblioteca, pero otras citan la app;</li><li>falta la línea "Licença:" en la sección "Alvo";</li><li>el título todavía tiene [corchetes] de la plantilla.</li></ul></div>
   </div>
-  <p class="sub" style="margin:1.6em 0 .8em">El ejemplo malo del repositorio, verificado:</p>
+  <p class="sub" style="margin:1.6em 0 .8em">El ejemplo malo del repositorio, verificado (el verificador responde en portugués):</p>
 <pre><span class="k">python3 confere_provas.py exemplos/provas-ruim.md</span>
 <span class="bad">NOTA 0/10 — REPROVADO</span>
 Conclusões: 4 · com prova no código do app: 0
@@ -270,7 +270,7 @@ Avisos (não reprova, mas melhore):
   <p class="sub">El verificador funciona en cualquier computadora con Python. El REA es opcional: ayuda al agente a ver por dentro las apps y los sitios.</p>
   <div class="grid g3">
     <div class="card"><h3>Python 3.8 o posterior</h3><p>Para el verificador y las pruebas. Comprueba:</p><pre>python3 --version</pre></div>
-    <div class="card"><h3>Un agente de IA en la terminal</h3><p>Claude Code, Codex o el harness dsh. Cualquiera que lea archivos y ejecute comandos en la carpeta.</p></div>
+    <div class="card"><h3>Un agente de IA en la terminal</h3><p>Claude Code, Codex o el harness dsh (un agente de código que funciona en tu computadora). Cualquiera que lea archivos y ejecute comandos en la carpeta.</p></div>
     <div class="card"><h3>REA (opcional)</h3><p>La instalación del REA, del harness y de un modelo abierto está en otra guía, paso a paso:</p><p style="margin-top:.6em"><a href="https://inematds.github.io/rea-sem-travas/guia/" target="_blank" rel="noopener">REA sin bloqueos — guía de instalación →</a></p></div>
   </div>
 </div></section>
@@ -282,8 +282,9 @@ Avisos (não reprova, mas melhore):
 
   <div class="step"><div class="b">1</div><div>
     <h3>Descarga el kit</h3>
-    <p>Clona el repositorio y comprueba que el verificador funciona.</p>
-<pre><span class="k">git clone https://github.com/inematds/rea-com-provas.git</span>
+    <p>Clona el repositorio en tu carpeta personal y verifica que el verificador funcione. Los siguientes pasos usan esa ruta.</p>
+<pre><span class="k">cd ~</span>   <span class="c"># el kit queda en tu carpeta personal: ~/rea-com-provas</span>
+<span class="k">git clone https://github.com/inematds/rea-com-provas.git</span>
 <span class="k">cd rea-com-provas</span>
 <span class="k">python3 -m unittest discover tests</span>   <span class="c"># debe terminar con OK</span></pre>
   </div></div>

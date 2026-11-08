@@ -33,7 +33,7 @@ Regras do estudo:
    `caminho/do/arquivo.ext:linha-linha` e "Trecho:", e "## O que NÃO deu para provar".
 4. Nenhuma conclusão sem arquivo e linha. O que você acha mas não achou vai para
    "O que NÃO deu para provar".
-5. Rode: python3 [caminho]/confere_provas.py provas.md — até sair APROVADO.
+5. Rode: python3 ~/rea-com-provas/confere_provas.py provas.md — até sair APROVADO.
 Pare aqui e me mostre o resultado do conferidor.
 
 FASE 2 — CONSTRUIR A SUA VERSÃO (só depois que eu disser "pode construir")
@@ -62,4 +62,4 @@ Regras da construção:
 
 ---
 
-**Conferir:** `python3 confere_provas.py provas.md` tem de sair `APROVADO` antes da fase 2.
+**Conferir:** `python3 ~/rea-com-provas/confere_provas.py provas.md` (o kit clonado na sua pasta pessoal, como no passo 1 do guia) tem de sair `APROVADO` antes da fase 2.

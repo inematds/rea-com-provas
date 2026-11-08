@@ -8,7 +8,8 @@ Uso:
 Reprova (código de saída 1) quando:
   1. falta a seção "O que NÃO deu para provar" (ou ela está vazia);
   2. alguma conclusão (bloco ### dentro de "## Conclusões") não cita arquivo/trecho;
-  3. as referências apontam só para bibliotecas (node_modules, vendor, site-packages...).
+  3. as referências apontam só para bibliotecas (node_modules, vendor, site-packages, dist,
+     build, arquivos .min.js...).
 Aprova (código 0) quando nada disso acontece. Erro de leitura = código 2.
 
 Só biblioteca padrão do Python 3.8+. Não usa rede, não muda nenhum arquivo.
@@ -25,6 +26,7 @@ from dataclasses import dataclass, field
 PASTAS_BIBLIOTECA = {
     "node_modules", "vendor", "vendors", "site-packages", "dist-packages",
     "bower_components", "third_party", "third-party", ".venv", "venv", "pods",
+    "dist", "build",
 }
 
 # Títulos aceitos (sem acento, minúsculo). PT é o padrão; EN/ES para quem traduziu o modelo.
@@ -58,8 +60,9 @@ def _eh_referencia(token: str) -> bool:
 
 
 def _eh_biblioteca(ref: str) -> bool:
-    partes = [p.lower() for p in ref.split(":")[0].split("/")]
-    return any(p in PASTAS_BIBLIOTECA for p in partes)
+    caminho = ref.split(":")[0].lower()
+    partes = caminho.split("/")
+    return any(p in PASTAS_BIBLIOTECA for p in partes[:-1]) or caminho.endswith((".min.js", ".min.css"))
 
 
 def extrair_referencias(texto: str) -> list[str]:

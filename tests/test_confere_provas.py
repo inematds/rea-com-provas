@@ -68,6 +68,15 @@ class TestConferidor(unittest.TestCase):
         self.assertTrue(cp._eh_biblioteca(".venv/lib/python3.12/site-packages/flask/app.py:1"))
         self.assertFalse(cp._eh_biblioteca("app/vendors_page.py:4"))
 
+    def test_dist_build_e_min_js_contam_como_biblioteca(self):
+        self.assertTrue(cp._eh_biblioteca("dist/bundle.js:4"))
+        self.assertTrue(cp._eh_biblioteca("build/static/main.js:2"))
+        self.assertTrue(cp._eh_biblioteca("assets/jquery.min.js:1"))
+        self.assertFalse(cp._eh_biblioteca("src/build.ts:3"))
+        texto = (BOM.replace("`src/Grade.tsx:10-20`", "`dist/bundle.js:4`")
+                    .replace("`src/status.ts:5`", "`assets/app.min.js:9`"))
+        self.assertFalse(cp.conferir(texto).aprovado)
+
     def test_uma_biblioteca_e_uma_do_app_nao_reprova(self):
         texto = BOM.replace("`src/status.ts:5`", "`node_modules/sse/index.js:5`")
         r = cp.conferir(texto)

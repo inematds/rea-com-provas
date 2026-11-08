@@ -39,7 +39,7 @@ construção quando sair `APROVADO`.
 App grande carrega milhares de arquivos de bibliotecas embutidas. Se o agente "prova" com
 eles, ele está explicando a biblioteca, não o app. Mande ignorar `node_modules`, `vendor`,
 `site-packages`, `dist` e arquivos `.min.js`. O conferidor reprova quando todas as provas
-estão nessas pastas e avisa quando uma conclusão só cita biblioteca.
+estão nessas pastas (ou em arquivos `.min.js`/`.min.css`) e avisa quando uma conclusão só cita biblioteca.
 
 ## Regra 3 — Só software seu ou open source que deixa estudar
 
