@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REA with proof — rebuild an app without AI guessing</title>
+<meta name="description" content="Open kit: 4 rules, 3 ready-made builds (agent dashboard, lead reactor, rebuilt site), and a checker that rejects the evidence file when the AI doesn’t show where its conclusion came from.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/rea-com-provas/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/rea-com-provas/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/rea-com-provas/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    --bad:#F0918A; --ok:#7CE0C6; --warnbg:rgba(250,204,21,.07);
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    --bad:#A83426; --ok:#0E6B55; --warnbg:#FEF9C3;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  body.light .btn{background:#FACC15}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  body.light nav{background:rgba(246,247,249,.85)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb);white-space:nowrap}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:18px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut);white-space:nowrap} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(250,204,21,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:1080px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.95rem;margin:0}
+  .card ul{color:var(--mut);font-size:.95rem;margin:.5em 0 0;padding-left:1.1em}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(250,204,21,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre}
+  pre .c{color:#8a8a98} pre .k{color:#f0c070} pre .s{color:#9ece6a} pre .bad{color:#F0918A} pre .ok{color:#7CE0C6}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:#FACC15;color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;height:auto;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.9rem;color:var(--mut);background:var(--card)}
+  .warn{background:var(--warnbg);border:1px solid var(--line);border-left:4px solid #EAB308;border-radius:14px;padding:20px 22px}
+  .warn h3{font-size:1.1rem;margin-bottom:.5em}
+  .warn ul{margin:.3em 0 0;padding-left:1.1em}
+  .warn li{margin:.3em 0}
+  .tag{display:inline-block;font-family:Sora;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:.2em .7em;border:1px solid currentColor}
+  .tag.bad{color:var(--bad)} .tag.ok{color:var(--ok)}
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.cmp{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;font-size:.95rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:Sora;font-size:.85rem;color:var(--mut);font-weight:600}
+  .tbl{overflow-x:auto}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🔎</span> REA with proof</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#regras">Rules</a>
+    <a class="sec" href="#construcoes">Builds</a>
+    <a class="sec" href="#conferidor">Checker</a>
+    <a class="sec" href="#guia">Step-by-step guide</a>
+    <a class="sec" href="#rodada">Real test</a>
+    <span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+    <a class="btn" href="https://github.com/inematds/rea-com-provas" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Method · 3 builds · checker</span>
+      <h1>The AI says it understands the app. Ask for <span class="amb">proof</span>.</h1>
+      <p class="lead">Four rules, three ready-made prompts, and a checker that rejects the agent when it guesses.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Start the step-by-step guide</a>
+        <a class="btn ghost" href="https://github.com/inematds/rea-com-provas" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner-en.jpg" alt="Rebuild with evidence: a golden magnifying glass over documents stamped approved"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">In short</span>
+  <p><strong>REA with proof</strong> is an open, free kit for anyone who uses an AI agent (Claude Code, Codex, or the dsh harness) to study an app and build their own version. The problem: the agent says it understands how the app works and makes up what it hasn’t seen. The kit includes 4 rules, 3 ready-made prompts (agent dashboard, lead reactor, and rebuilt site), and a checker in Python that rejects the evidence file when proof is missing. To use it, you need Python 3 and an AI agent in the terminal.</p>
+</div></section>
+
+<section id="aviso" style="padding:34px 0"><div class="wrap">
+  <div class="warn" role="note">
+    <h3>⚠️ Safety and license — read first</h3>
+    <ul>
+      <li><strong>Only software you own or open-source software whose license allows you to study it</strong> (MIT, Apache-2.0, BSD, GPL, MPL…). Don’t use this method on another company’s closed-source app.</li>
+      <li><strong>Studying isn’t copying.</strong> Your version is written from scratch, with your name, text, and design. Don’t take files, icons, or branding.</li>
+      <li>GPL/AGPL license: if you reuse any code, follow its terms. If in doubt, take only the idea.</li>
+      <li>Run the agent in a separate folder, without passwords, keys, or customer data. The kit only reads and writes files in the work folder; nothing is sent, deleted, or published on its own.</li>
+    </ul>
+    <p class="mut" style="margin:.8em 0 0;font-size:.92rem">The kit is MIT licensed. Full text of the rules: <a href="https://github.com/inematds/rea-com-provas/blob/main/REGRAS.md" target="_blank" rel="noopener">REGRAS.md (in Portuguese)</a>.</p>
+  </div>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">What it is</span>
+  <h2>Asking for proof changes what the agent delivers</h2>
+  <p class="sub">Without proof, the agent writes a convincing paragraph. With proof, each sentence points to a file and a line you can open.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-en.jpg" alt="The kit includes: 4 rules, provas.md, checker, agent dashboard, lead reactor, and rebuilt site" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="cmp">
+    <div class="card">
+      <span class="tag bad">✗ No proof</span>
+      <pre data-tr style="margin-top:12px">C1. The app uses a modern architecture
+    based on microservices.
+    Confidence: high</pre>
+      <p>Sounds good. You have no way to check. Sometimes it’s true; sometimes it’s a guess.</p>
+    </div>
+    <div class="card">
+      <span class="tag ok">✓ With proof</span>
+      <pre data-tr style="margin-top:12px">C1. Each agent is a card in a grid
+- Proof: `src/components/AgentGrid.tsx:12-48`
+- Excerpt: `repeat(auto-fill, minmax(280px, 1fr))`</pre>
+      <p>Open the file at line 12 and see for yourself. If it’s not there, the agent got it wrong.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="regras"><div class="wrap">
+  <span class="chip">The 4 rules</span>
+  <h2>The whole method fits into four rules</h2>
+  <p class="sub">Paste them along with any request like "study this app and make mine".</p>
+  <div class="grid g4">
+    <div class="card"><div class="num">1</div><h3>Ask for provas.md</h3><p>Each conclusion with the file and excerpt that proves it, plus the section "O que NÃO deu para provar".</p></div>
+    <div class="card"><div class="num">2</div><h3>Focus on the app’s code</h3><p>Tell it to ignore node_modules, vendor, and site-packages. Proving it with a library means explaining the library, not the app.</p></div>
+    <div class="card"><div class="num">3</div><h3>Only what’s yours or open source</h3><p>Your own software or open source software with a license that allows you to study it. Then, YOUR version, with your name and look.</p></div>
+    <div class="card"><div class="num">4</div><h3>Describe the look</h3><p>Colors with codes, fonts, motion, and density in a design brief. That’s what separates an ugly dashboard from a good screen.</p></div>
+  </div>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">How it works</span>
+  <h2>Proof first, code second</h2>
+  <p class="sub">Every request in the kit has two phases. The agent only builds after the checker approves the proof file.</p>
+  <div class="flow">
+    <span>You choose the app (yours or open source)</span><span class="arr">→</span>
+    <span>Agent studies</span><span class="arr">→</span>
+    <span>provas.md</span><span class="arr">→</span>
+    <span>confere_provas.py</span><span class="arr">→</span>
+    <span>APROVADO?</span><span class="arr">→</span>
+    <span>Design brief</span><span class="arr">→</span>
+    <span>Your version</span>
+  </div>
+</div></section>
+
+<section id="construcoes"><div class="wrap">
+  <span class="chip">3 ready-to-use builds</span>
+  <h2>Three requests to paste into the agent</h2>
+  <p class="sub">In Portuguese, with [brackets] where you swap in your own details. They work in Claude Code, Codex, or the dsh harness. The agents in the builds are simulated: nothing calls AI or an API, and no real messages are sent.</p>
+  <div class="grid g3">
+    <div class="card"><h3>🧩 A · Agent dashboard</h3><p>Studies how an open source app shows several agents side by side, then builds a dashboard with 6 live agents for a business.</p>
+      <ul><li>Example: dental clinic — lead generation, inbox, SEO, scheduling, support, reports</li><li>Each card says what the agent does and its status (with a label, not just color)</li><li>Command box that sends the task to the right agent</li></ul>
+      <p style="margin-top:.8em"><a href="https://github.com/inematds/rea-com-provas/blob/main/prompts/a-painel-de-agentes.md" target="_blank" rel="noopener">prompts/a-painel-de-agentes.md (in Portuguese)</a></p></div>
+    <div class="card"><h3>⚡ B · Lead reactor</h3><p>Studies how an open source app splits a request into tasks for worker agents, then builds the lead workflow.</p>
+      <ul><li>Lead comes in → qualify → reply → schedule → follow up (4 lanes)</li><li>A lead that doesn’t qualify exits with the reason written down</li><li>Celebrate on screen when the lead schedules</li></ul>
+      <p style="margin-top:.8em"><a href="https://github.com/inematds/rea-com-provas/blob/main/prompts/b-reator-de-leads.md" target="_blank" rel="noopener">prompts/b-reator-de-leads.md (in Portuguese)</a></p></div>
+    <div class="card"><h3>🌐 C · Rebuilt website</h3><p>Maps YOUR site (sections, fonts, scripts, buttons) and rebuilds it as a premium version in your own words.</p>
+      <ul><li>Way 1: save the page with <code>curl</code>, without installing anything</li><li>Way 2: REA looks at the page open in a local Chrome browser</li><li>Same buttons and destinations; no made-up prices or promises</li></ul>
+      <p style="margin-top:.8em"><a href="https://github.com/inematds/rea-com-provas/blob/main/prompts/c-site-refeito.md" target="_blank" rel="noopener">prompts/c-site-refeito.md (in Portuguese)</a></p></div>
+  </div>
+</div></section>
+
+<section id="conferidor"><div class="wrap">
+  <span class="chip">The checker</span>
+  <h2>confere_provas.py rejects guesses</h2>
+  <p class="sub">A Python file that uses only the standard library and doesn’t need internet access. Reads provas.md and returns a score from 0 to 10, APROVADO or REPROVADO, and a list of what’s missing. Exits with code 0 (approved), 1 (rejected), or 2 (couldn’t read the file).</p>
+  <div class="grid g2">
+    <div class="card"><h3>Rejects when</h3>
+      <ul><li>the section "O que NÃO deu para provar" is missing (or empty);</li><li>a conclusion doesn’t cite a file or excerpt (for example, <code>src/arquivo.ts:40-62</code>);</li><li>all references point to libraries (node_modules, vendor, site-packages…).</li></ul></div>
+    <div class="card"><h3>Warns (without rejecting) when</h3>
+      <ul><li>the evidence doesn’t include the line number;</li><li>one conclusion cites only a library, but others cite the app;</li><li>the line "Licença:" is missing from the "Alvo" section;</li><li>the title still has [brackets] from the template.</li></ul></div>
+  </div>
+  <p class="sub" style="margin:1.6em 0 .8em">The repository’s bad example, checked:</p>
+<pre><span class="k">python3 confere_provas.py exemplos/provas-ruim.md</span>
+<span class="bad">NOTA 0/10 — REPROVADO</span>
+Conclusões: 4 · com prova no código do app: 0
+
+O que falta (reprova):
+  ✗ Falta a seção "## O que NÃO deu para provar". Peça ao agente: "liste o que você acha mas não achou no código".
+  ✗ "C1. O app usa uma arquitetura moderna baseada em microsserviços": conclusão sem prova. Falta o arquivo/trecho (ex.: `src/arquivo.ts:40-62`).
+  ✗ "C4. Dá para refazer tudo em uma tarde": conclusão sem prova. Falta o arquivo/trecho (ex.: `src/arquivo.ts:40-62`).
+  ✗ Todas as referências apontam para bibliotecas (node_modules, vendor, site-packages...). Mande o agente ignorar essas pastas e provar no código do app.
+
+Avisos (não reprova, mas melhore):
+  ! "C2. A grade de agentes é feita com uma biblioteca de layout": só cita biblioteca embutida; mostre onde o PRÓPRIO app usa isso.
+  ! "C3. As animações deixam a experiência fluida e profissional": só cita biblioteca embutida; mostre onde o PRÓPRIO app usa isso.
+  ! Sem a linha "Licença:" em "## Alvo". Confira se você pode estudar esse app.</pre>
+  <p class="mut" style="font-size:.92rem">The good example (<code>exemplos/provas-boa.md</code>) is here <code>NOTA 10/10 — APROVADO</code>. Both use a fictional app to show the format.</p>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Prerequisites</span>
+  <h2>What you need</h2>
+  <p class="sub">The checker runs on any computer with Python. REA is optional: it helps the agent see inside apps and websites.</p>
+  <div class="grid g3">
+    <div class="card"><h3>Python 3.8 or newer</h3><p>For the checker and tests. Check:</p><pre>python3 --version</pre></div>
+    <div class="card"><h3>An AI agent in the terminal</h3><p>Claude Code, Codex, or the dsh harness. Any one that can read files and run commands in the folder.</p></div>
+    <div class="card"><h3>REA (optional)</h3><p>REA, the harness, and an open model are installed in another step-by-step guide:</p><p style="margin-top:.6em"><a href="https://inematds.github.io/rea-sem-travas/guia/" target="_blank" rel="noopener">REA without restrictions — installation guide →</a></p></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Step-by-step guide</span>
+  <h2>From scratch to your version</h2>
+  <p class="sub">Commands for Linux, Mac, or WSL. On Windows without WSL, replace <code>python3</code> with <code>py</code>.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Download the kit</h3>
+    <p>Clones the repository and checks that the checker works.</p>
+<pre><span class="k">git clone https://github.com/inematds/rea-com-provas.git</span>
+<span class="k">cd rea-com-provas</span>
+<span class="k">python3 -m unittest discover tests</span>   <span class="c"># should end with OK</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Choose the target and check the license</h3>
+    <p>An open-source app (download its code) or your own website. Open the license file before doing anything.</p>
+<pre><span class="k">git clone https://github.com/[dono]/[app-open-source].git ~/estudo/app</span>
+<span class="k">cat ~/estudo/app/LICENSE</span>   <span class="c"># MIT, Apache-2.0, BSD, GPL…? Then you can study it</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Fill out the design brief</h3>
+    <p>Copy the template and replace the [brackets]: colors with codes, fonts, motion, and density. The template already includes a filled-in example in the INEMA style.</p>
+<pre><span class="k">cp brief/MODELO-brief-design.md ~/estudo/brief.md</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Paste one of the 3 build plans into the agent</h3>
+    <p>Open the file at <code>prompts/</code>, replace the [brackets], and paste the text block into your agent, opened in the study folder. It only does phase 1 (study) and stops.</p>
+<pre><span class="k">cd ~/estudo</span>
+<span class="k">claude</span>   <span class="c"># or: codex — and paste the text from prompts/a-painel-de-agentes.md</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Check provas.md</h3>
+    <p>The request itself tells the agent to run the checker. Run it yourself too: this is your "ask for proof" step.</p>
+<pre><span class="k">python3 ~/rea-com-provas/confere_provas.py provas.md</span>
+<span class="k">python3 ~/rea-com-provas/confere_provas.py provas.md --json</span>   <span class="c"># same result in JSON</span></pre>
+    <p>REPROVADO? Paste the "O que falta" list back into the agent and ask it to fix the issues. Open 2 or 3 proofs in the editor and check whether the text is really on that line: the checker checks the format; you check the content.</p>
+  </div></div>
+
+  <div class="step"><div class="b">6</div><div>
+    <h3>Allow the build</h3>
+    <p>Only with APROVADO. Write this in the agent:</p>
+<pre>pode construir</pre>
+    <p>At the end, it tells you how to open it, what was left out, and what needs manual testing.</p>
+  </div></div>
+</div></section>
+
+<section id="rodada"><div class="wrap">
+  <span class="chip">Real test</span>
+  <h2>The inema.club website rebuilt by build C</h2>
+  <p class="sub">On 11/08/2026, we ran build C (method 1, without REA) in Claude Code, using the subscription, with inema.club as "your website." Both phases ran at once, without intervention. Numbers measured.</p>
+  <div class="grid g4" style="margin-bottom:22px">
+    <div class="card"><div class="num">23</div><h3>conclusions</h3><p>Each one has a line from the saved HTML and a copied excerpt.</p></div>
+    <div class="card"><div class="num">10</div><h3>reviewer score</h3><p>SCORE 10/10 — APROVADO, with all 23 conclusions proven in the page code.</p></div>
+    <div class="card"><div class="num">4/4</div><h3>proofs checked by hand</h3><p>We opened 4 cited lines (72, 113, 144, 161): the excerpt was there.</p></div>
+    <div class="card"><div class="num">7:52</div><h3>minutes, both phases</h3><p>472 s and 42 agent turns. It produced a 94 KB index.html, with no horizontal scrolling at 390 px or 1440 px.</p></div>
+  </div>
+  <div class="ex">
+    <figure><img src="../assets/rodada-site-original-1440.jpg" alt="The inema.club website as it looked on 11/08/2026" loading="lazy"><figcaption>Before: the live website on 11/08/2026.</figcaption></figure>
+    <figure><img src="../assets/rodada-versao-nova-1440.jpg" alt="Premium version made by build C following the design brief" loading="lazy"><figcaption>After: the phase 2 version, following the INEMA style brief (background #0c0c10, yellow #FACC15, Sora).</figcaption></figure>
+  </div>
+  <p class="mut" style="font-size:.92rem;margin-top:16px">What the agent itself listed as a limitation: the original website's fonts and colors are in a CSS file that was not saved (only the HTML), and it couldn't open a browser to test the mobile layout (we checked afterward). Files from this run in the repository: <a href="https://github.com/inematds/rea-com-provas/tree/main/exemplos/rodada-real" target="_blank" rel="noopener">exemplos/rodada-real (in Portuguese)</a> (request used, provas.md, saved HTML, and new version).</p>
+  <div class="ex" style="margin-top:18px">
+    <figure><img src="../assets/conferidor-reprovado.jpg" alt="Reviewer rejects the example without proof" loading="lazy"><figcaption>exemplos/provas-ruim.md: NOTA 0/10 — REPROVADO.</figcaption></figure>
+    <figure><img src="../assets/conferidor-aprovado.jpg" alt="Reviewer approves the example with proof" loading="lazy"><figcaption>exemplos/provas-boa.md: NOTA 10/10 — APROVADO.</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="kit"><div class="wrap">
+  <span class="chip">What’s in the repository</span>
+  <h2>Kit files</h2>
+  <div class="tbl"><table>
+    <tr><th>File</th><th>What it’s for</th></tr>
+    <tr><td><code>REGRAS.md</code></td><td>The 4 rules and the safety and licensing notice.</td></tr>
+    <tr><td><code>prompts/</code></td><td>The 3 build plans: a-painel-de-agentes, b-reator-de-leads, c-site-refeito.</td></tr>
+    <tr><td><code>provas/MODELO-provas.md</code></td><td>The format of the proof file the agent must provide.</td></tr>
+    <tr><td><code>confere_provas.py</code></td><td>The checker: score, APROVADO/REPROVADO, and what’s missing.</td></tr>
+    <tr><td><code>brief/MODELO-brief-design.md</code></td><td>Design brief template, with a filled-in example in the INEMA style.</td></tr>
+    <tr><td><code>exemplos/</code></td><td>provas-boa.md (approved), provas-ruim.md (rejected), and the real round.</td></tr>
+    <tr><td><code>tests/</code></td><td>Checker tests, no internet required.</td></tr>
+  </table></div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Python 3 · stdlib</div><div class="pill">Claude Code · Codex · dsh</div><div class="pill">REA (optional)</div><div class="pill">MIT License</div>
+    <p style="margin-top:18px">REA with proof · open and free kit ·
+      <a href="https://github.com/inematds/rea-com-provas">github.com/inematds/rea-com-provas</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+    <p style="margin-top:6px">See also: <a href="https://inematds.github.io/rea-engenharia-reversa/guia/">what REA is</a> · <a href="https://inematds.github.io/rea-sem-travas/guia/">REA without restrictions (installation)</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='rea-com-provas-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>

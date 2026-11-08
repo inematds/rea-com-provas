@@ -1,0 +1,36 @@
+Você vai trabalhar em duas fases. Não pule a fase 1.
+
+FASE 1 — MAPEAR COM PROVAS (não escreva o site novo ainda)
+Este é o MEU site: https://inema.club. O material salvo está em
+exemplos/rodada-real (site-linhas.html e, se houver, rea-pagina.json).
+Faça o mapa do site:
+- Seções da página, na ordem, com o título de cada uma.
+- Fontes usadas (nome e onde são carregadas).
+- Cores principais.
+- Scripts próprios e de terceiros (analytics, chat, pixel), separando os dois.
+- Botões e links de ação (texto do botão e para onde vai).
+- Textos que são a minha voz (frases que devem continuar na versão nova).
+
+Regras do mapa:
+1. Na seção "## Alvo" do provas.md escreva "Licença: site próprio de INEMA.CLUB".
+2. Scripts de terceiros (pixel, chat, analytics, frameworks) são biblioteca: anote que
+   existem, mas as conclusões sobre o site têm de citar o HTML da página.
+3. Entregue o provas.md no formato de provas/MODELO-provas.md: "## Conclusões" com
+   "### C1. ..." e, em cada uma, "Prova:" = `site-linhas.html:linha` (ou o campo do
+   rea-pagina.json) e "Trecho:", e a seção "## O que NÃO deu para provar"
+   (ex.: o que só aparece depois de login ou de rolar a página).
+4. Rode: python3 exemplos/rodada-real/confere_provas.py provas.md — até sair APROVADO.
+Quando o conferidor sair APROVADO, siga direto para a fase 2 (eu já autorizo: pode construir).
+
+FASE 2 — A VERSÃO PREMIUM (só depois que eu disser "pode construir")
+Construa do zero, na pasta exemplos/rodada-real/versao-nova, um único
+index.html (HTML + CSS + JavaScript, sem servidor) com:
+- As mesmas seções e os mesmos botões de ação do mapa (mesmos destinos).
+- As minhas palavras: reaproveite os textos marcados como "minha voz"; o resto você
+  pode reescrever mais curto e mais claro, sem inventar fato, preço ou promessa.
+- O visual do brief de design em exemplos/rodada-real/brief.md.
+- Funciona no celular (390 px) sem rolagem para o lado.
+- Sem scripts de terceiros (eu coloco depois os que eu quiser manter).
+No fim, me diga como abrir, o que mudou em relação ao site atual e o que ficou de fora.
+
+O modelo do provas.md está em exemplos/rodada-real/MODELO-provas.md. Grave o provas.md em exemplos/rodada-real/provas.md. Trabalhe só dentro de exemplos/rodada-real. Não use a internet.

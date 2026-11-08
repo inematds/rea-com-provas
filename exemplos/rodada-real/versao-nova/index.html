@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aprender Inteligência Artificial na prática | INEMA.club</title>
+<meta name="description" content="Plataforma brasileira de formação prática em inteligência artificial, agentes e automação, com cursos, projetos, trilhas e comunidade.">
+<link rel="canonical" href="https://www.inema.club/">
+<link rel="alternate" hreflang="pt-BR" href="https://www.inema.club/">
+<link rel="alternate" hreflang="en" href="https://www.inema.club/en/">
+<link rel="alternate" hreflang="es" href="https://www.inema.club/es/">
+<meta property="og:title" content="INEMA.club — Aprenda, pratique e evolua com IA">
+<meta property="og:description" content="Formação prática em inteligência artificial, agentes e automação.">
+<meta property="og:image" content="https://www.inema.club/doc/inema-hero-aprenda-pratique-evolua.webp">
+<!-- Scripts de terceiros (Plausible etc.) ficaram de fora de propósito: adicione aqui os que quiser manter. -->
+<style>
+:root{
+  --bg:#0c0c10; --card:#16161e; --card2:#1b1b25; --line:#272730;
+  --tx:#e9e9ee; --tx2:#9a9aa6; --ac:#FACC15; --ac-tx:#1a1206;
+  --ok:#7CE0C6; --warn:#F2B45C; --err:#F0918A;
+  --r:14px; --rb:10px;
+  --f-title:"Sora","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --f-text:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 var(--f-text);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--f-title);font-weight:700;line-height:1.2;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+.sec{padding:72px 0 0}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;margin-bottom:28px}
+.sec-head h2{font-size:clamp(1.6rem,3.2vw,2.25rem)}
+.sec-head p{color:var(--tx2);max-width:640px;margin-top:8px}
+.eyebrow{font:500 14px/1.4 var(--f-mono);color:var(--ac);letter-spacing:.06em;text-transform:uppercase}
+.muted{color:var(--tx2)}
+.lead{color:var(--tx2);max-width:760px;margin-top:14px}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:var(--rb);font:600 15px/1.2 var(--f-text);text-decoration:none;border:1px solid var(--line);background:transparent;color:var(--tx);cursor:pointer;transition:border-color .2s,background .2s,transform .2s;text-align:center;max-width:100%}
+.btn:hover{border-color:var(--ac)}
+.btn-pri{background:var(--ac);color:var(--ac-tx);border-color:var(--ac)}
+.btn-pri:hover{filter:brightness(1.06);transform:translateY(-1px)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+
+/* topo */
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.logo{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.logo b{font:700 22px/1 var(--f-title);letter-spacing:.01em}
+.logo b span{color:var(--ac)}
+.logo small{font:500 14px var(--f-mono);color:var(--tx2)}
+.top-act{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.lang{display:flex;border:1px solid var(--line);border-radius:var(--rb);overflow:hidden}
+.lang a{font:500 14px/1 var(--f-mono);padding:10px 11px;text-decoration:none;color:var(--tx2)}
+.lang a.on{background:var(--card2);color:var(--ac)}
+
+/* menu */
+.nav{position:sticky;top:0;z-index:20;background:rgba(12,12,16,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:8px;padding-bottom:8px}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav a{flex:0 0 auto;font-size:14px;font-weight:500;color:var(--tx2);text-decoration:none;padding:8px 12px;border-radius:8px;white-space:nowrap}
+.nav a:hover,.nav a.on{color:var(--tx);background:var(--card)}
+.nav a.ext::after{content:" ↗";color:var(--tx2);font-size:14px}
+
+/* campanha */
+.promo{margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding:18px 22px;border:1px solid var(--ac);border-radius:var(--r);background:var(--card);text-decoration:none}
+.promo strong{font:700 clamp(1.05rem,2.4vw,1.35rem)/1.3 var(--f-title)}
+.promo strong em{font-style:normal;color:var(--ac)}
+.promo .muted{font-size:14px}
+
+/* hero */
+.hero{padding:56px 0 0}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+.hero h1{font-size:clamp(2.1rem,5vw,3.6rem);margin-top:14px}
+.hero h1 em{font-style:normal;color:var(--ac)}
+.hero-txt p{color:var(--tx2);margin-top:18px;max-width:620px}
+.hero-txt p.big{color:var(--tx);font-size:1.08rem}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.stat b{display:block;font:600 1.4rem/1.1 var(--f-mono);color:var(--tx)}
+.stat span{font-size:14px;color:var(--tx2)}
+.hero-side{display:grid;gap:14px}
+.tile{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);text-decoration:none;transition:border-color .2s}
+.tile:hover{border-color:var(--ac)}
+.tile .t-body{flex:1;min-width:0}
+.tile .t-title{font:700 1rem var(--f-title)}
+.tile .t-title span{color:var(--tx2);font-weight:500}
+.tile .t-text{font-size:14px;color:var(--tx2)}
+.tile .arrow{color:var(--ac);font-size:1.2rem}
+.badge-live{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;font:600 14px/1 var(--f-mono);color:var(--ac);border:1px solid var(--ac);padding:6px 9px;border-radius:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ac);animation:blink 1.6s ease-in-out infinite}
+.live{border-color:var(--ac);animation:pulse 1.6s ease-in-out infinite}
+.cover{position:relative;display:block;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--card2);text-decoration:none}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover-fb{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:18px}
+.cover-fb b{font:700 1.15rem/1.25 var(--f-title)}
+.cover-fb i{font:500 14px var(--f-mono);font-style:normal;color:var(--ac)}
+
+/* busca */
+.search{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:center;padding:30px;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+.search h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+.search p{color:var(--tx2);margin-top:8px}
+.search label{display:block;font:500 14px var(--f-mono);color:var(--tx2);margin-bottom:8px}
+.search-row{display:flex;gap:10px}
+.search input{flex:1;min-width:0;min-height:48px;padding:0 16px;border-radius:var(--rb);border:1px solid var(--line);background:var(--bg);color:var(--tx);font:16px var(--f-text)}
+.search input:focus{border-color:var(--ac);outline:none}
+
+/* atualizações */
+.upd-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.panel{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:22px 22px 10px;min-width:0}
+.panel h3{font-size:1.1rem;margin-bottom:10px}
+.upd{display:grid;grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:baseline;padding:12px 0;border-top:1px solid var(--line);text-decoration:none}
+.upd:first-of-type{border-top:0}
+.upd .d{font:500 14px var(--f-mono);color:var(--tx2)}
+.upd .t{font-size:15px;line-height:1.45;min-width:0;overflow-wrap:anywhere}
+.upd .t small{display:block;font:500 14px var(--f-mono);color:var(--ac);margin-bottom:2px}
+.upd .t strong{font-family:var(--f-mono);font-weight:500;font-size:14px;color:var(--ac)}
+a.upd:hover .t{color:#fff}
+a.upd .a{color:var(--ac)}
+
+/* eventos */
+.ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ev{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden;min-width:0}
+.ev .cover{border:0;border-bottom:1px solid var(--line);border-radius:0}
+.ev-body{display:flex;flex-direction:column;gap:10px;padding:18px;flex:1}
+.ev h3{font-size:1.08rem}
+.ev h3 a{text-decoration:none}
+.ev h3 a:hover{color:var(--ac)}
+.ev-sub{font-size:14px;color:var(--tx2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.atalhos{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:2px}
+.atalhos a{display:block;padding:9px 10px;margin:0 -10px;border-radius:8px;text-decoration:none}
+.atalhos a:hover{background:var(--card2)}
+.atalhos b{display:block;font-size:14px;font-weight:600}
+.atalhos b::after{content:" →";color:var(--ac)}
+.atalhos span{display:block;font-size:14px;color:var(--tx2);line-height:1.45}
+.ev .btn{margin-top:auto;align-self:flex-start}
+.ev-more{margin-top:24px;display:flex;justify-content:center}
+
+/* trilhas de cursos */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:s}
+.step{display:flex;flex-direction:column;gap:6px;padding:18px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);text-decoration:none;transition:border-color .2s,transform .2s;min-width:0}
+.step:hover{border-color:var(--ac);transform:translateY(-2px)}
+.step .n{font:600 14px var(--f-mono);color:var(--ac)}
+.step h4{font-size:1rem}
+.step p{font-size:14px;color:var(--tx2);line-height:1.5}
+.note{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;color:var(--tx2);font-size:15px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.box{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:26px;min-width:0}
+.box h2{font-size:1.45rem}
+.box .lead{margin-top:10px;font-size:15px}
+.box .steps{grid-template-columns:1fr;margin-top:18px}
+.box .step{background:var(--bg)}
+.quote{font:700 clamp(1.3rem,3vw,1.8rem)/1.25 var(--f-title);color:var(--ac);margin-top:10px}
+
+/* banners de imagem */
+.img-link{display:block;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--card2);text-decoration:none;transition:border-color .2s}
+.img-link:hover{border-color:var(--ac)}
+.img-link img{width:100%;height:auto}
+.img-link .fb{display:none;padding:28px;font:700 1.2rem/1.3 var(--f-title)}
+.img-link.sem-img .fb{display:block}
+.perfis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+
+/* trilhas pro */
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--tx)}
+.center{display:flex;justify-content:center;margin-top:26px}
+
+/* projetos */
+.big-num{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;padding:30px;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+.big-num .num{font:700 clamp(3rem,8vw,5rem)/1 var(--f-mono);color:var(--ac)}
+.big-num h3{font-size:1.25rem}
+.big-num p{color:var(--tx2);margin-top:6px;font-size:15px}
+.motto{padding:64px 0 0;text-align:center}
+.motto p{font:700 clamp(1.8rem,5vw,3rem)/1.15 var(--f-title)}
+.motto p span{color:var(--ac)}
+
+/* telegram */
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.tg span{font:500 14px var(--f-mono);padding:10px 12px;border:1px solid var(--line);border-radius:var(--rb);background:var(--card);overflow-wrap:anywhere}
+
+/* vip */
+.vip{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;padding:28px;border:1px solid var(--ac);border-radius:var(--r);background:var(--card);text-decoration:none}
+.vip-logo{width:88px;height:88px;border-radius:12px;overflow:hidden;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:700 14px var(--f-mono);color:var(--ac)}
+.vip-logo img{width:100%;height:100%;object-fit:cover}
+.vip h2{font-size:1.8rem}
+.vip p{color:var(--tx2);margin-top:6px}
+
+/* social */
+.soc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.soc .panel{padding-bottom:16px}
+.soc .panel h3{margin-bottom:12px}
+.soc-links{display:flex;flex-wrap:wrap;gap:6px}
+.soc-links a{font:500 14px var(--f-mono);padding:8px 10px;border-radius:8px;border:1px solid var(--line);text-decoration:none;color:var(--tx2)}
+.soc-links a:hover{color:var(--ac);border-color:var(--ac)}
+
+/* rodapé */
+.foot{margin-top:80px;border-top:1px solid var(--line);padding:32px 0 40px;color:var(--tx2);font-size:14px}
+.foot .wrap{display:grid;gap:12px}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+.foot a{text-decoration:none;color:var(--tx)}
+.foot a:hover{color:var(--ac)}
+.foot .lbl{font-family:var(--f-mono);color:var(--tx2)}
+
+/* barra fixa do celular */
+.dock{display:none}
+
+/* movimento */
+.reveal{opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
+.reveal.in{opacity:1;transform:none}
+@keyframes blink{50%{opacity:.25}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(250,204,21,0)}50%{box-shadow:0 0 0 3px rgba(250,204,21,.18)}}
+@keyframes glow{0%{text-shadow:0 0 0 rgba(250,204,21,0)}40%{text-shadow:0 0 24px rgba(250,204,21,.6)}100%{text-shadow:0 0 0 rgba(250,204,21,0)}}
+.glow{animation:glow .6s ease}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* responsivo */
+@media (max-width:1000px){
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .ev-grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(3,1fr)}
+  .soc{grid-template-columns:repeat(2,1fr)}
+  .split{grid-template-columns:1fr}
+  .search{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  body{padding-bottom:76px}
+  .sec{padding-top:56px}
+  .top-act .btn{display:none}
+  .upd-grid,.ev-grid,.soc{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .perfis{grid-template-columns:1fr 1fr}
+  .big-num,.vip{grid-template-columns:1fr;text-align:left}
+  .search{padding:22px}
+  .search-row{flex-direction:column}
+  .promo{padding:16px}
+  .dock{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(12,12,16,.96);border-top:1px solid var(--line)}
+  .dock .btn{flex:1;padding:10px 8px;font-size:14px}
+}
+@media (max-width:420px){
+  .steps{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="INEMA.CLUB — Portal INEMA"><b>INEMA<span>.</span>CLUB</b><small>Portal INEMA</small></a>
+    <div class="top-act">
+      <a class="btn" href="https://pay.inema.pro" target="_blank" rel="noopener noreferrer">Participe da Comunidade</a>
+      <a class="btn btn-pri" href="https://pay.inema.pro" target="_blank" rel="noopener noreferrer">Assine o INEMA.PRO</a>
+      <nav class="lang" aria-label="Idioma">
+        <a href="/" class="on" hreflang="pt-BR" lang="pt">PT</a>
+        <a href="/en/" hreflang="en" lang="en">EN</a>
+        <a href="/es/" hreflang="es" lang="es">ES</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Seções">
+  <div class="wrap">
+    <a href="/">Home</a>
+    <a class="ext" href="https://buscas.inema.club" target="_blank" rel="noopener noreferrer">Buscas</a>
+    <a class="ext" href="https://news.inema.pro" target="_blank" rel="noopener noreferrer">News</a>
+    <a href="/aprender-inteligencia-artificial/">Aprender IA</a>
+    <a href="#trilha-iniciantes">Iniciantes</a>
+    <a href="/cursos/">Cursos</a>
+    <a class="ext" href="https://eventos.inema.pro/" target="_blank" rel="noopener noreferrer">Eventos</a>
+    <a href="/videos/">Vídeos</a>
+    <a href="#comunidade">Projetos</a>
+    <a href="#telegram">Telegram</a>
+    <a href="#social">Social</a>
+    <a class="ext" href="https://inema.pro" target="_blank" rel="noopener noreferrer">INEMA.PRO</a>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+  <a class="promo reveal" href="https://pay.inema.pro" target="_blank" rel="noopener noreferrer">
+    <div>
+      <div class="eyebrow">Novembro é Black</div>
+      <strong>INEMA.VIP + INEMA.PRO por <em>R$ 247</em> em 12 meses</strong>
+    </div>
+    <span class="btn btn-pri">Saiba mais em pay.inema.pro →</span>
+  </a>
+</div>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-txt reveal">
+      <div class="eyebrow">Aprenda Inteligência Artificial na prática: cursos, agentes, automação e comunidade</div>
+      <h1>Aprenda Inteligência Artificial na prática, <em>do zero ao avançado.</em></h1>
+      <p class="big">O INEMA Club é um ecossistema de aprendizado prático para quem quer dominar inteligência artificial e aplicar IA no trabalho, nos projetos e na carreira. A ideia central é simples: aprender, praticar e evoluir com IA de forma contínua.</p>
+      <p>Aqui você encontra cursos práticos diretos ao ponto, projetos reais para colocar a mão na massa, trilhas organizadas para cada nível, uma comunidade ativa e a curadoria das melhores ferramentas. Tudo voltado a construir uma base sólida de conhecimento — que te torna mais produtivo, mais estratégico e mais preparado para o futuro do trabalho.</p>
+      <div class="hero-cta">
+        <a class="btn btn-pri" href="/aprender-inteligencia-artificial/">Novo por aqui? Comece pelo guia: como aprender IA do zero →</a>
+        <a class="btn" href="#trilha-iniciantes">Trilha para Iniciantes</a>
+      </div>
+      <div class="stats" aria-label="Visitas ao portal">
+        <div class="stat"><b data-count="177048">177.048</b><span>acessos</span></div>
+        <div class="stat"><b data-count="80491">80.491</b><span>visitantes únicos</span></div>
+      </div>
+    </div>
+    <div class="hero-side reveal">
+      <a class="tile" href="https://news.inema.pro" target="_blank" rel="noopener noreferrer">
+        <span class="badge-live"><span class="dot" aria-hidden="true"></span>AO VIVO</span>
+        <span class="t-body"><span class="t-title">NEWS<span>.inema.pro</span></span><br><span class="t-text">As notícias de IA do dia, curadas</span></span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <div class="cover">
+        <span class="cover-fb"><i>INEMA.CLUB</i><b>Aprenda. Pratique. Evolua.</b></span>
+        <img src="https://www.inema.club/doc/inema-hero-aprenda-pratique-evolua.webp" alt="INEMA.CLUB — Aprenda. Pratique. Evolua. O ecossistema para dominar IA na prática." onerror="this.remove()">
+      </div>
+      <a id="live-inematdsx" class="tile live" href="https://www.youtube.com/@inematdsx" target="_blank" rel="noopener noreferrer">
+        <span class="t-body"><span class="t-title">Hoje tem live no INEMATDSX</span><br><span class="t-text">Ao vivo às 21:00 (Brasília) no YouTube · @inematdsx</span></span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="busca-titulo">
+  <div class="wrap">
+    <div class="search reveal">
+      <div>
+        <h2 id="busca-titulo">O que você quer aprender hoje?</h2>
+        <p>Pesquise os cursos públicos do INEMA por tema, ferramenta ou objetivo. Mesmo sem WebMCP, você pode continuar manualmente pelo catálogo.</p>
+      </div>
+      <form toolname="buscar_cursos" tooldescription="Busca cursos públicos do INEMA por tema, ferramenta ou objetivo de aprendizagem." toolautosubmit action="/cursos/" method="get">
+        <label for="home-course-search">Tema ou objetivo</label>
+        <div class="search-row">
+          <input id="home-course-search" type="search" required maxlength="100" placeholder="Ex.: WebMCP, agentes, automação" toolparamdescription="Tema, ferramenta ou objetivo que a pessoa deseja aprender." name="q">
+          <button class="btn btn-pri" type="submit">Buscar cursos</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="atualizacoes">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="eyebrow">Atualizações</div><h2>O que entrou esta semana</h2></div></div>
+    <div class="upd-grid">
+      <div class="panel reveal"><h3>Últimas Novidades</h3>
+        <div class="upd"><span class="d">08/11</span><span class="t"><small>INEMA.IA CONCEITOS</small>Bolha da IA: estourou? O que é verdade e o que vem depois</span><span></span></div>
+        <div class="upd"><span class="d">07/11</span><span class="t"><small>INEMA.CODEX</small>Uma IA operou outra IA: o GPT-6 Astra mexendo nos pesos</span><span></span></div>
+        <div class="upd"><span class="d">07/11</span><span class="t"><small>INEMA.DEV</small>Agente que aprende - O erro que volta vira trava</span><span></span></div>
+        <div class="upd"><span class="d">07/11</span><span class="t"><small>INEMA.DEV</small>memoria-projetos - Seu agente acha qualquer projeto e lembra o que foi decidido</span><span></span></div>
+        <div class="upd"><span class="d">07/11</span><span class="t"><small>INEMA.VIBE</small>A verdade das redes - O que funciona em cada rede, com dados reais</span><span></span></div>
+      </div>
+      <div class="panel reveal"><h3>Últimas Atualizações de Cursos</h3>
+        <a class="upd" href="https://inematds.github.io/trabalho-chato-ao-agente-v72/" target="_blank" rel="noopener noreferrer"><span class="d">04/11</span><span class="t">Entregue o trabalho chato a um agente — a rotina da empresa no automático (8 aulas)</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://inematds.github.io/claude-code-2-na-pratica-v72/" target="_blank" rel="noopener noreferrer"><span class="d">04/11</span><span class="t">Claude Code 2.0 na prática — as novidades do Claude Code testadas na prática (7 aulas)</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://inematds.github.io/claude-gestor-de-agentes-v72/" target="_blank" rel="noopener noreferrer"><span class="d">28/10</span><span class="t">Claude como gestor de agentes — saia do chat e coordene várias sessões (8 aulas)</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://inematds.github.io/do-prompt-ao-papel-v72/" target="_blank" rel="noopener noreferrer"><span class="d">26/10</span><span class="t">Do prompt ao papel — gerencie a IA como alguém da equipe (8 aulas)</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://inematds.github.io/crie-seu-metodo-v72/" target="_blank" rel="noopener noreferrer"><span class="d">21/10</span><span class="t">Crie seu método — gestão com agentes e o método que vale mais que o software (7 aulas)</span><span class="a" aria-hidden="true">→</span></a>
+      </div>
+      <div class="panel reveal"><h3>Últimas Atualizações de Projetos</h3>
+        <a class="upd" href="https://inematds.github.io/agente-que-aprende/guia/" target="_blank" rel="noopener noreferrer"><span class="d">07/11</span><span class="t"><strong>agente-que-aprende</strong> — seu agente para de repetir o mesmo erro: o erro que volta vira trava</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://inematds.github.io/verdade-das-redes/guia/" target="_blank" rel="noopener noreferrer"><span class="d">07/11</span><span class="t"><strong>verdade-das-redes</strong> — o que funciona em cada rede, com dados reais de 17 canais</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://inematds.github.io/memoria-projetos/guia/" target="_blank" rel="noopener noreferrer"><span class="d">07/11</span><span class="t"><strong>memoria-projetos</strong> — seu agente acha qualquer projeto e lembra o que já foi decidido</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://inematds.github.io/gpt-image-26/guia/" target="_blank" rel="noopener noreferrer"><span class="d">07/11</span><span class="t"><strong>gpt-image-26</strong> — como usar o GPT Image 2.6: complexidade, GIF, SVG, markup e custo</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://inematds.github.io/lance-sua-startup/guia/" target="_blank" rel="noopener noreferrer"><span class="d">07/11</span><span class="t"><strong>lance-sua-startup</strong> — sua startup em 59 sites de lançamento, com um agente preenchendo</span><span class="a" aria-hidden="true">→</span></a>
+      </div>
+      <div class="panel reveal"><h3>Últimas Atualizações de Vídeos</h3>
+        <a class="upd" href="https://www.youtube.com/watch?v=bnLvmYcP4PI" target="_blank" rel="noopener noreferrer"><span class="d">08/11</span><span class="t">Agentes de IA que aprendem com os próprios erros — a escada de 6 degraus (6 min)</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://www.youtube.com/watch?v=l-D13_QGtHk" target="_blank" rel="noopener noreferrer"><span class="d">08/11</span><span class="t">Seu agente de IA repete o mesmo erro? Os 6 degraus para ele aprender (2 min 50 s)</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://www.youtube.com/watch?v=IrYVfEdymPc" target="_blank" rel="noopener noreferrer"><span class="d">07/11</span><span class="t">E se a bolha da IA estourar? O que acontece com a IA (3 min 5 s)</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://www.youtube.com/watch?v=hSAQ_-HR5oI" target="_blank" rel="noopener noreferrer"><span class="d">07/11</span><span class="t">A bolha da IA estourou: o que os números mostram (3 min 13 s)</span><span class="a" aria-hidden="true">→</span></a>
+        <a class="upd" href="https://www.youtube.com/watch?v=H8EPdBbxuSs" target="_blank" rel="noopener noreferrer"><span class="d">07/11</span><span class="t">Bolha da IA estourou? O que é verdade e o que é exagero (3 min 11 s)</span><span class="a" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="eventos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Áreas e eventos</div><h2>Cada assunto, tudo num lugar só</h2><p>Cursos, kits, guias e vídeos de cada tema, reunidos numa área.</p></div>
+      <a class="btn" href="https://eventos.inema.pro/" target="_blank" rel="noopener noreferrer">Ver todos os eventos ↗</a>
+    </div>
+    <div class="ev-grid">
+      <article class="ev reveal" id="evento-lance-sua-startup">
+        <a class="cover" href="https://eventos.inema.pro/lance-sua-startup/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Lance sua Startup</b></span><img src="https://www.inema.club/doc/lance-sua-startup.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/lance-sua-startup/" target="_blank" rel="noopener noreferrer">Lance sua Startup</a></h3>
+          <p class="ev-sub">Sua startup em 59 sites de lançamento, com um agente de IA preenchendo os cadastros enquanto você aprova.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/lance-sua-startup/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>Sua startup em 59 sites de lançamento, com um agente preenchendo</span></a></li><li><a href="https://inematds.github.io/lance-sua-startup/guia/#sites" target="_blank" rel="noopener noreferrer"><b>Os 59 sites</b><span>Custo, selo e quem faz cada cadastro, com filtros</span></a></li><li><a href="https://inematds.github.io/lance-sua-startup/guia/#guia" target="_blank" rel="noopener noreferrer"><b>Passo a passo</b><span>Ficha da marca, plano em 4 grupos e o agente enviando</span></a></li><li><a href="https://inematds.github.io/lance-sua-startup/guia/#regras" target="_blank" rel="noopener noreferrer"><b>Regras do agente</b><span>Nunca paga, nunca mexe no seu site, para no captcha</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-negocios-com-ia">
+        <a class="cover" href="https://eventos.inema.pro/negocios-com-ia/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Negócios com IA</b></span><img src="https://www.inema.club/doc/negocios-com-ia.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/negocios-com-ia/" target="_blank" rel="noopener noreferrer">Negócios com IA</a></h3>
+          <p class="ev-sub">Os 13 negócios do pior ao melhor para começar, com notas, a escada para subir e um teste para achar o seu.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/negocios-com-ia/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>Os 13 negócios com IA, do pior ao melhor para começar</span></a></li><li><a href="https://inematds.github.io/negocios-com-ia/guia/#lista" target="_blank" rel="noopener noreferrer"><b>Ranking</b><span>Notas de técnica, mercado e durabilidade de cada um</span></a></li><li><a href="https://inematds.github.io/negocios-com-ia/guia/escada/#teste" target="_blank" rel="noopener noreferrer"><b>Qual é o seu</b><span>Teste de 6 perguntas que indica seu negócio de entrada</span></a></li><li><a href="https://inematds.github.io/negocios-com-ia/guia/escada/#setores" target="_blank" rel="noopener noreferrer"><b>Por setor</b><span>Ofertas prontas para clínica, contabilidade, imobiliária e mais</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-ia-na-pratica">
+        <a class="cover" href="https://eventos.inema.pro/ia-na-pratica/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>IA na Prática</b></span><img src="https://www.inema.club/doc/ia-na-pratica.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/ia-na-pratica/" target="_blank" rel="noopener noreferrer">IA na Prática</a></h3>
+          <p class="ev-sub">20 respostas diretas: ferramentas no computador, consultoria, captação, segurança e modelos locais, com imagem e os projetos para aprofundar.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/ia-na-pratica/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>As 20 respostas com imagem, explicação e o que guardar</span></a></li><li><a href="https://eventos.inema.pro/ia-na-pratica/#ferramentas" target="_blank" rel="noopener noreferrer"><b>Ferramentas</b><span>Apps, terminal e agentes no dia a dia</span></a></li><li><a href="https://eventos.inema.pro/ia-na-pratica/#testes" target="_blank" rel="noopener noreferrer"><b>Segurança</b><span>Testes de segurança: frequência e onde rodar</span></a></li><li><a href="https://inematds.github.io/ia-20-respostas/guia/" target="_blank" rel="noopener noreferrer"><b>Guia completo</b><span>Ilustrações animadas e explicação detalhada de cada pergunta</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-profissoes-virais">
+        <a class="cover" href="https://eventos.inema.pro/profissoes-virais/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Profissões virais</b></span><img src="https://www.inema.club/doc/profissoes-virais.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/profissoes-virais/" target="_blank" rel="noopener noreferrer">Profissões virais</a></h3>
+          <p class="ev-sub">O radar da sua área no automático: vídeos todo dia de finanças, saúde, direito e clima, com fonte confiável na tela, e como montar o da sua profissão.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/profissoes-virais/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>Como os 4 sistemas funcionam e como montar o da sua profissão</span></a></li><li><a href="https://inematds.github.io/finviral/guia/" target="_blank" rel="noopener noreferrer"><b>finviral</b><span>Finanças: o Top 10 da Anbima, todo dia, com fonte</span></a></li><li><a href="https://inematds.github.io/saudeviral/guia/" target="_blank" rel="noopener noreferrer"><b>saudeviral</b><span>Saúde: médicos e nutricionistas, com &quot;sem consenso&quot;</span></a></li><li><a href="https://inematds.github.io/advviral/guia/" target="_blank" rel="noopener noreferrer"><b>advviral</b><span>Direito: os seus direitos pelos advogados do YouTube</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-eleicoes2026">
+        <a class="cover" href="https://eleicoes.inema.club/analise.html" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Eleições 2026, o mapa da virada</b></span><img src="https://www.inema.club/doc/eleicoes2026.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eleicoes.inema.club/analise.html" target="_blank" rel="noopener noreferrer">Eleições 2026, o mapa da virada</a></h3>
+          <p class="ev-sub">O Brasil com as 5.570 cidades na cor de quem venceu o 2º turno. Lula 51,79% (2.875 cidades, 13 estados) x Flávio Bolsonaro 48,21% (2.695 cidades, 14 estados), dados oficiais do TSE.</p>
+          <ul class="atalhos"><li><a href="https://inematds.github.io/eleicoes2026/guia/" target="_blank" rel="noopener noreferrer"><b>Guia do projeto</b><span>Como funciona, como rodar e o código aberto</span></a></li><li><a href="https://eleicoes.inema.club/analise.html" target="_blank" rel="noopener noreferrer"><b>Análise do resultado</b><span>O que mudou do 1º para o 2º turno, cidade por cidade</span></a></li><li><a href="https://eleicoes.inema.club/virada.html" target="_blank" rel="noopener noreferrer"><b>A virada de 10,4 milhões</b><span>O que a conta explica e o que dá para investigar</span></a></li><li><a href="https://eleicoes.inema.club/" target="_blank" rel="noopener noreferrer"><b>Resultado final</b><span>Brasil e os 27 estados, 100% apurado (TSE)</span></a></li><li><a href="https://municipios.inema.club/" target="_blank" rel="noopener noreferrer"><b>Municípios</b><span>Cada estado com as cidades colorindo conforme a apuração</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-auditoria-seguranca">
+        <a class="cover" href="https://inematds.github.io/auditoria-seguranca/guia/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>ATAQUE: atualize seus sistemas agora.</b></span><img src="https://www.inema.club/doc/auditoria-seguranca.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://inematds.github.io/auditoria-seguranca/guia/" target="_blank" rel="noopener noreferrer">ATAQUE: atualize seus sistemas agora.</a></h3>
+          <p class="ev-sub">Chaves de certificados quebradas (uma era o número 4) e a falha PHP2Shell: como testar e como atualizar.</p>
+          <a class="btn" href="https://inematds.github.io/auditoria-seguranca/guia/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-mostratec">
+        <a class="cover" href="https://eventos.inema.pro/mostratec/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>INEMA na Mostratec, de 27 a 29 de outubro de 2026, na FENAC em Novo Hamburgo/RS</b></span><img src="https://www.inema.club/doc/mostratec.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/mostratec/" target="_blank" rel="noopener noreferrer">INEMA na Mostratec, de 27 a 29 de outubro de 2026, na FENAC em Novo Hamburgo/RS</a></h3>
+          <p class="ev-sub">Fundamentos de IA, JARVIS, OSWork e robótica ao vivo, com a EJR Robótica Educacional.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/mostratec/#fundamentos" target="_blank" rel="noopener noreferrer"><b>Fundamentos de IA</b><span>Como pedir, conferir e usar a IA, sem programar</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#jarvis" target="_blank" rel="noopener noreferrer"><b>JARVIS</b><span>O seu próprio sistema de IA</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#oswork" target="_blank" rel="noopener noreferrer"><b>OSWork</b><span>A IA trabalhando no seu computador</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#parceria" target="_blank" rel="noopener noreferrer"><b>Robótica com a EJR</b><span>Dos primeiros circuitos aos humanoides, com a EJR Robótica</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#jogos" target="_blank" rel="noopener noreferrer"><b>Fábrica de Jogos</b><span>Oito jogos feitos com IA para jogar e criar a sua versão</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#solucoes" target="_blank" rel="noopener noreferrer"><b>Soluções que vendem</b><span>Sete projetos com ESP32 e IA para montar e vender</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#robos" target="_blank" rel="noopener noreferrer"><b>Robôs para montar</b><span>Robô de papel, assistente de voz e robô vigia</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#futuro" target="_blank" rel="noopener noreferrer"><b>Seu futuro em imagem</b><span>Seis perguntas e uma imagem do seu futuro</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#desafios" target="_blank" rel="noopener noreferrer"><b>Desafios para quem é bom</b><span>Oito desafios de lógica, IA, ESP32 e o braço SO-101</span></a></li><li><a href="https://eventos.inema.pro/mostratec/#braco" target="_blank" rel="noopener noreferrer"><b>Braço SO-101 ao vivo</b><span>O braço robô do estande e o seu gêmeo digital</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-inema-gov">
+        <a class="cover" href="https://eventos.inema.pro/inema-gov/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>INEMA GOV 2027</b></span><img src="https://www.inema.club/doc/inema-gov.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/inema-gov/" target="_blank" rel="noopener noreferrer">INEMA GOV 2027</a></h3>
+          <p class="ev-sub">Prefeitura que aprende: formação e método para prefeituras, com duas palestras, três meses e duas soluções.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/inema-gov/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>O caminho de 3 e de 12 meses, as 10 trilhas e os pilotos</span></a></li><li><a href="https://inematds.github.io/inema-gov/guia/" target="_blank" rel="noopener noreferrer"><b>Guia e kit</b><span>Método, 8 modelos para preencher e o plano dos pilotos</span></a></li><li><a href="https://inematds.github.io/gestao-ia-processos-v72/" target="_blank" rel="noopener noreferrer"><b>Trilha 3: processos</b><span>Mapear e redesenhar antes de automatizar</span></a></li><li><a href="https://eventos.inema.pro/inema-gov/formacao/" target="_blank" rel="noopener noreferrer"><b>Formação</b><span>7 cursos abertos na ordem do programa</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-loop-r-engenharia">
+        <a class="cover" href="https://eventos.inema.pro/loop-r-engenharia/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>LOOP-R Engenharia</b></span><img src="https://www.inema.club/doc/loop-r-engenharia.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/loop-r-engenharia/" target="_blank" rel="noopener noreferrer">LOOP-R Engenharia</a></h3>
+          <p class="ev-sub">Formação técnica em 6 cursos: agentes que trabalham horas, se verificam e melhoram.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/loop-r-engenharia/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>A formação, os kits atuais e os vídeos sobre loops de agentes</span></a></li><li><a href="https://inematds.github.io/loop-r-eng-base-v72/" target="_blank" rel="noopener noreferrer"><b>Comece pelo curso 0</b><span>Anatomia do loop: objetivo, estado, ação, verificação e parada</span></a></li><li><a href="https://inematds.github.io/loop-r-eng-execucao-longa-v72/" target="_blank" rel="noopener noreferrer"><b>⏳ Execução longa</b><span>Agentes que trabalham horas sem perder o rumo</span></a></li><li><a href="https://inematds.github.io/loop-r-eng-seguranca-v72/" target="_blank" rel="noopener noreferrer"><b>Segurança do loop</b><span>Tríade letal, permissões, hooks e sandbox</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-do-chat-ao-agente">
+        <a class="cover" href="https://eventos.inema.pro/do-chat-ao-agente/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Do chat ao criador de agentes</b></span><img src="https://www.inema.club/doc/do-chat-ao-agente.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/do-chat-ao-agente/" target="_blank" rel="noopener noreferrer">Do chat ao criador de agentes</a></h3>
+          <p class="ev-sub">Aprenda rápido em 4 sequências — OSWork no terminal, o seu Jarvis, filas de tarefas e redes sociais no automático. Cursos, projetos e exercícios abertos.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/do-chat-ao-agente/#seq1" target="_blank" rel="noopener noreferrer"><b>1 · OSWork</b><span>Do chat para o terminal: o agente na sua pasta</span></a></li><li><a href="https://eventos.inema.pro/do-chat-ao-agente/#seq2" target="_blank" rel="noopener noreferrer"><b>2 · Seu Jarvis</b><span>O INTELECTO no Telegram, com memória</span></a></li><li><a href="https://eventos.inema.pro/do-chat-ao-agente/#seq3" target="_blank" rel="noopener noreferrer"><b>3 · Filas</b><span>Dez tarefas e vá dormir, com o inemaccbot</span></a></li><li><a href="https://eventos.inema.pro/do-chat-ao-agente/#seq4" target="_blank" rel="noopener noreferrer"><b>4 · Redes</b><span>r7e, promoavatar e o canal viral do seu nicho</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-robot">
+        <a class="cover" href="https://eventos.inema.pro/robot/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Robôs e humanoides</b></span><img src="https://www.inema.club/doc/robot.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/robot/" target="_blank" rel="noopener noreferrer">Robôs e humanoides</a></h3>
+          <p class="ev-sub">Da simulação ao robô real. Cursos de robótica, humanoides e IA incorporada, a simulação que treina o robô a partir de uma foto e os vídeos.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/robot/" target="_blank" rel="noopener noreferrer"><b>Área Robot</b><span>Cursos, simulação e vídeos de robótica e humanoides num lugar só</span></a></li><li><a href="https://inematds.github.io/robot/" target="_blank" rel="noopener noreferrer"><b>Robótica do Zero</b><span>Do ESP32 ao ROS 2 e ao braço que aprende com IA</span></a></li><li><a href="https://inematds.github.io/vla-v72/" target="_blank" rel="noopener noreferrer"><b>VLA para Robótica</b><span>Os modelos que fazem o robô ver, entender e agir (v7.2, out/2026)</span></a></li><li><a href="https://inematds.github.io/robotica-real2sim/guia/" target="_blank" rel="noopener noreferrer"><b>Simulação Real2Sim</b><span>Uma foto da mesa vira a simulação que treina o robô</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-rea">
+        <a class="cover" href="https://eventos.inema.pro/rea/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Engenharia reversa com REA</b></span><img src="https://www.inema.club/doc/rea.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/rea/" target="_blank" rel="noopener noreferrer">Engenharia reversa com REA</a></h3>
+          <p class="ev-sub">O seu agente de IA abre qualquer programa, entende, prova e ajuda a reconstruir. Guia, teste real, vídeos e o repositório oficial.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/rea/" target="_blank" rel="noopener noreferrer"><b>Área REA</b><span>Guia, passo a passo, teste real, vídeos e cuidados num lugar só</span></a></li><li><a href="https://github.com/morluto/rea" target="_blank" rel="noopener noreferrer"><b>Repositório oficial</b><span>morluto/rea no GitHub: o código e as versões do REA</span></a></li><li><a href="https://inematds.github.io/rea-engenharia-reversa/guia/" target="_blank" rel="noopener noreferrer"><b>Guia REA</b><span>O que é, por dentro e como usar, em PT, EN e ES</span></a></li><li><a href="https://inematds.github.io/rea-engenharia-reversa/videos/" target="_blank" rel="noopener noreferrer"><b>▶ Vídeos do REA</b><span>Do conceito ao técnico, com capítulos e legendas</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-jarvis">
+        <a class="cover" href="https://eventos.inema.pro/jarvis/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Seu próprio Jarvis</b></span><img src="https://www.inema.club/doc/jarvis.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/jarvis/" target="_blank" rel="noopener noreferrer">Seu próprio Jarvis</a></h3>
+          <p class="ev-sub">Crie o seu sistema de IA: o INTELECTO e todos os sistemas operacionais de IA do INEMA, com cursos, projetos e vídeos.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/jarvis/" target="_blank" rel="noopener noreferrer"><b>Área JARVIS</b><span>INTELECTO, Jarvis prontos, memória, cursos e vídeos num lugar só</span></a></li><li><a href="https://inematds.github.io/intelecto/" target="_blank" rel="noopener noreferrer"><b>INTELECTO</b><span>Você escolhe as peças, a IA constrói o seu assistente</span></a></li><li><a href="https://inematds.github.io/jarvis/" target="_blank" rel="noopener noreferrer"><b>Curso Jarvis</b><span>Seu sistema operacional de IA, gratuito, em 6 trilhas</span></a></li><li><a href="https://inematds.github.io/intelecto-instalacao/videos/" target="_blank" rel="noopener noreferrer"><b>▶ Instale o seu Jarvis</b><span>Vídeo: da mercearia ao assistente no ar, sem código</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-videos">
+        <a class="cover" href="https://eventos.inema.pro/videos/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Sua fábrica de vídeos</b></span><img src="https://www.inema.club/doc/videos-ia.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/videos/" target="_blank" rel="noopener noreferrer">Sua fábrica de vídeos</a></h3>
+          <p class="ev-sub">Do tema ao filme, com IA: explicativos, shorts, documentários, filmes, avatar e publicação, todos os sistemas do INEMA num lugar só.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/videos/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>Todos os sistemas de vídeo, cursos e exemplos num lugar só</span></a></li><li><a href="https://inematds.github.io/explicavideos/guia/" target="_blank" rel="noopener noreferrer"><b>Explicavideos</b><span>Tema vira explicativo com avatar, voz e ilustrações</span></a></li><li><a href="https://inematds.github.io/makeshorts/guia/" target="_blank" rel="noopener noreferrer"><b>MakeShorts</b><span>Fábrica de shorts 9:16: roteiro, edição e revisão</span></a></li><li><a href="https://inematds.github.io/formacao-cinema-ia-direcao-v72/" target="_blank" rel="noopener noreferrer"><b>Cinema com IA</b><span>Formação gratuita em 6 cursos: da direção ao site cinematográfico</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-consultoria-ia">
+        <a class="cover" href="https://eventos.inema.pro/consultoria-ia/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Consultoria de IA</b></span><img src="https://www.inema.club/doc/consultoria-ia.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/consultoria-ia/" target="_blank" rel="noopener noreferrer">Consultoria de IA</a></h3>
+          <p class="ev-sub">De construtor a consultor: em 2027 o cliente tem o mesmo agente que você. Os quatro papéis, o método, cursos, kits para o cliente e vídeos.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/consultoria-ia/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>Os quatro papéis, o método, cursos, kits e vídeos num lugar só</span></a></li><li><a href="https://inematds.github.io/consultoria2k/" target="_blank" rel="noopener noreferrer"><b>Consultor de IA</b><span>Do rótulo ao resultado: mapear, auditar, planejar e entregar</span></a></li><li><a href="https://inematds.github.io/raio-x-margem/guia/" target="_blank" rel="noopener noreferrer"><b>Raio-X de Margem</b><span>Kit aberto: diagnóstico em reais, proposta e contrato</span></a></li><li><a href="https://inematds.github.io/consultoria-ia-caminhos/videos/" target="_blank" rel="noopener noreferrer"><b>Cursos e kits da área</b><span>Vídeo: os 24 cursos, os 10 kits e como usar</span></a></li><li><a href="https://inematds.github.io/consultoria-ia-na-pratica/videos/" target="_blank" rel="noopener noreferrer"><b>Consultoria de IA na prática</b><span>Vídeo: como atuar em 2027 como consultor e mentor</span></a></li><li><a href="https://inematds.github.io/consultor-ia-2027/videos/" target="_blank" rel="noopener noreferrer"><b>De construtor a consultor</b><span>Vídeo: o que aprender para faturar em 2027</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-mods">
+        <a class="cover" href="https://eventos.inema.pro/mods/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Claude Code MODS</b></span><img src="https://www.inema.club/doc/mods.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/mods/" target="_blank" rel="noopener noreferrer">Claude Code MODS</a></h3>
+          <p class="ev-sub">Painéis, guardas e atalhos dentro do seu terminal: 28 mods prontos, 3 oficiais da Anthropic e curso técnico.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/mods/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>Os 28 mods, os prompts que escolhem por você, segurança e os exemplos oficiais</span></a></li><li><a href="https://inematds.github.io/inema-mods/guia/" target="_blank" rel="noopener noreferrer"><b>inema-mods</b><span>18 mods em português: proteção, contexto, produtividade e visual</span></a></li><li><a href="https://inematds.github.io/claude-mods-starter-kit/guia/" target="_blank" rel="noopener noreferrer"><b>Starter Kit</b><span>10 mods com guia passo a passo em PT, EN e ES</span></a></li><li><a href="https://inematds.github.io/ccmods-tecnico/" target="_blank" rel="noopener noreferrer"><b>Curso técnico</b><span>Crie o seu mod: 16 módulos em 4 trilhas</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-skills">
+        <a class="cover" href="https://eventos.inema.pro/skills/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Skills para agentes</b></span><img src="https://www.inema.club/doc/skills.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/skills/" target="_blank" rel="noopener noreferrer">Skills para agentes</a></h3>
+          <p class="ev-sub">Crie, audite e atualize as suas skills do Claude Code e do Codex: as regras novas da Anthropic, o validador, 13 cursos e 42 projetos.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/skills/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>O que é uma skill, as regras novas, 13 cursos e 42 projetos num lugar só</span></a></li><li><a href="https://eventos.inema.pro/skills/#regras" target="_blank" rel="noopener noreferrer"><b>As 10 regras</b><span>O que mudou com os modelos Claude 5.5: menos manual, mais verificação</span></a></li><li><a href="https://eventos.inema.pro/skills/#auditar" target="_blank" rel="noopener noreferrer"><b>Audite as suas</b><span>Validador aberto: relatório por regra antes de qualquer edição</span></a></li><li><a href="https://inematds.github.io/claude-skills/" target="_blank" rel="noopener noreferrer"><b>Claude Skills na Prática</b><span>Anatomia do SKILL.md e 12 skills dissecadas (PT · EN · ES)</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-atendimento">
+        <a class="cover" href="https://eventos.inema.pro/atendimento/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Atendimento com Agentes</b></span><img src="https://www.inema.club/doc/atendimento.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/atendimento/" target="_blank" rel="noopener noreferrer">Atendimento com Agentes</a></h3>
+          <p class="ev-sub">O cliente marca e tira dúvidas pelo WhatsApp e a equipe entra pelo Telegram: clínica, restaurante, hotel, academia, fisioterapia e nutrição.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/atendimento/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>Os seis setores, o método e os cursos num lugar só</span></a></li><li><a href="https://inematds.github.io/atende-clinica/guia/" target="_blank" rel="noopener noreferrer"><b>Atende Clínica</b><span>Sistema pronto: 93 de 93 testes, WhatsApp e equipe no Telegram</span></a></li><li><a href="https://eventos.inema.pro/atendimento/#kits" target="_blank" rel="noopener noreferrer"><b>Kits por setor</b><span>Restaurante, hotel, academia, fisioterapia e nutrição para implementar com /goal</span></a></li><li><a href="https://inematds.github.io/execucao-longa/guia/" target="_blank" rel="noopener noreferrer"><b>⏱ Execução Longa</b><span>O método que constrói cada kit, com testes congelados</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-inemaseo">
+        <a class="cover" href="https://eventos.inema.pro/inemaseo/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Seu site em destaque</b></span><img src="https://www.inema.club/doc/inemaseo.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/inemaseo/" target="_blank" rel="noopener noreferrer">Seu site em destaque</a></h3>
+          <p class="ev-sub">O método inemaSEO: Google, Bing e buscas de IA, sem ferramenta paga e sem conteúdo inventado.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/inemaseo/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>As 10 etapas, o caso do INEMA, a rotina e os projetos e cursos relacionados</span></a></li><li><a href="https://inematds.github.io/inemaseo-metodo/guia/" target="_blank" rel="noopener noreferrer"><b>Guia inemaSEO</b><span>Scripts e modelos para Google, Bing e buscas de IA, sem ferramenta paga</span></a></li><li><a href="https://inematds.github.io/formacao-inemaseo-fundacao-v72/" target="_blank" rel="noopener noreferrer"><b>Formação inemaSEO</b><span>7 cursos: do alicerce do site ao seu Semrush aberto</span></a></li><li><a href="https://webmcp.inema.pro/" target="_blank" rel="noopener noreferrer"><b>WebMCP Readiness</b><span>Teste se o seu site está pronto para agentes de IA</span></a></li><li><a href="https://inematds.github.io/aiv2026/guia/" target="_blank" rel="noopener noreferrer"><b>AIV 2026</b><span>AI Visibility: como ser citado pelas IAs</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-raio-x-margem">
+        <a class="cover" href="https://eventos.inema.pro/raio-x-margem/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Raio-X de Margem</b></span><img src="https://www.inema.club/doc/raio-x-margem.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/raio-x-margem/" target="_blank" rel="noopener noreferrer">Raio-X de Margem</a></h3>
+          <p class="ev-sub">Encontre onde o negócio perde dinheiro e recupere. Diagnóstico, correção e medição: kit aberto para consultores.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/raio-x-margem/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>O kit, os vazamentos por setor, os 8 passos e os cursos para vender serviços de IA</span></a></li><li><a href="https://inematds.github.io/raio-x-margem/guia/" target="_blank" rel="noopener noreferrer"><b>Kit Raio-X de Margem</b><span>Caçador de leads, Raio-X em R$/mês, receitas e Painel de Recuperação</span></a></li><li><a href="https://inematds.github.io/raio-x-margem/app/" target="_blank" rel="noopener noreferrer"><b>Abrir o app</b><span>No navegador, offline, sem instalar nada</span></a></li><li><a href="https://inematds.github.io/evai2026/curso-e-live/curso/" target="_blank" rel="noopener noreferrer"><b>Negócio de Serviços de IA</b><span>Como montar o negócio que vende esse diagnóstico</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-execucao-longa">
+        <a class="cover" href="https://eventos.inema.pro/execucao-longa/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Execução longa</b></span><img src="https://www.inema.club/doc/execucao-longa.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/execucao-longa/" target="_blank" rel="noopener noreferrer">Execução longa</a></h3>
+          <p class="ev-sub">Agentes que trabalham por horas. Objetivo verificável, estado em arquivos e regra de parada.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/execucao-longa/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>O método, o kit e todos os cursos e projetos sobre loops, contexto e memória</span></a></li><li><a href="https://inematds.github.io/execucao-longa/guia/" target="_blank" rel="noopener noreferrer"><b>⏳ Kit Execução Longa</b><span>Goal nível 3, estado em arquivos, loop headless, vigia e recall</span></a></li><li><a href="https://inematds.github.io/claude-session-kit/guia/" target="_blank" rel="noopener noreferrer"><b>claude-session-kit</b><span>Cota real, checkpoint e handoff antes do /clear</span></a></li><li><a href="https://inematds.github.io/loop-r/guia/" target="_blank" rel="noopener noreferrer"><b>LOOP-R</b><span>Loops que se aperfeiçoam com evidência e rollback</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-codex-claude">
+        <a class="cover" href="https://eventos.inema.pro/codex-claude/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Codex + Claude</b></span><img src="https://www.inema.club/doc/codex-claude.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/codex-claude/" target="_blank" rel="noopener noreferrer">Codex + Claude</a></h3>
+          <p class="ev-sub">Use os dois juntos. Um planeja, o outro desafia; os testes decidem. Debater o plano, imagem, construir e revisar, computer use, meta com parada e handoff.</p>
+          <ul class="atalhos"><li><a href="https://eventos.inema.pro/codex-claude/" target="_blank" rel="noopener noreferrer"><b>Área</b><span>Usar os dois juntos, como tudo se integra e todos os projetos</span></a></li><li><a href="https://inematds.github.io/use-both-claude-codex/guia/" target="_blank" rel="noopener noreferrer"><b>Use Both</b><span>Kit MIT: 6 fluxos, prompts, templates e skills handoff/prime</span></a></li><li><a href="https://inematds.github.io/iclaudex/" target="_blank" rel="noopener noreferrer"><b>⌨ claudex</b><span>Claude escreve o plano, Codex critica, em loop até validar</span></a></li><li><a href="https://eventos.inema.pro/claude-codex/" target="_blank" rel="noopener noreferrer"><b>Migrar</b><span>Claude → Codex: migre ou fique agnóstico</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-rsi">
+        <a class="cover" href="https://eventos.inema.pro/rsi/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>RSI chegou 2 anos antes</b></span><img src="https://www.inema.club/doc/rsi.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/rsi/" target="_blank" rel="noopener noreferrer">RSI chegou 2 anos antes</a></h3>
+          <p class="ev-sub">A IA que melhora a IA. Previsto para 2028, chegou em 2026; LOOP-R na prática. Explore a área de estudo.</p>
+          <a class="btn" href="https://eventos.inema.pro/rsi/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="guia-claude-opus55">
+        <a class="cover" href="https://inematds.github.io/claude-opus55/guia/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Guia Claude Opus 5.5</b></span><img src="https://www.inema.club/doc/claude-opus55.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://inematds.github.io/claude-opus55/guia/" target="_blank" rel="noopener noreferrer">Guia Claude Opus 5.5</a></h3>
+          <p class="ev-sub">O novo rei da Anthropic: mais barato que o Opus 5 e à frente em quase tudo. −20% no preço, 89,9 no SWE-bench Pro, 1M de contexto.</p>
+          <a class="btn" href="https://inematds.github.io/claude-opus55/guia/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-oswork">
+        <a class="cover" href="https://eventos.inema.pro/oswork/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>OSWork — IA como sistema de trabalho.</b></span><img src="https://www.inema.club/doc/oswork.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/oswork/" target="_blank" rel="noopener noreferrer">OSWork — IA como sistema de trabalho.</a></h3>
+          <p class="ev-sub">Curso completo com oito módulos.</p>
+          <a class="btn" href="https://eventos.inema.pro/oswork/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-jev">
+        <a class="cover" href="https://eventos.inema.pro/jev/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>JEV — decisões de IA na prática.</b></span><img src="https://www.inema.club/doc/jev.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/jev/" target="_blank" rel="noopener noreferrer">JEV — decisões de IA na prática.</a></h3>
+          <p class="ev-sub">Explore o projeto, aprenda no curso: 20 casos práticos, 36 aulas e 10 pacotes.</p>
+          <a class="btn" href="https://eventos.inema.pro/jev/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-gestao-agentes-2027">
+        <a class="cover" href="https://eventos.inema.pro/gestao-ia/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Gestão de Agentes 2027</b></span><img src="https://www.inema.club/doc/gestao-agentes-2027.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/gestao-ia/" target="_blank" rel="noopener noreferrer">Gestão de Agentes 2027</a></h3>
+          <p class="ev-sub">O novo papel das empresas. Mesma liderança, uma nova força de trabalho: humanos + agentes = mais valor.</p>
+          <a class="btn" href="https://eventos.inema.pro/gestao-ia/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-ia-cultivada">
+        <a class="cover" href="https://eventos.inema.pro/ia-cultivada/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>IA Cultivada</b></span><img src="https://www.inema.club/doc/ia-cultivada.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/ia-cultivada/" target="_blank" rel="noopener noreferrer">IA Cultivada</a></h3>
+          <p class="ev-sub">Não se programa, se cultiva. Mesma liderança, uma nova forma de criar agentes: função, contexto, ferramentas, regras, exemplos, memória, avaliação, feedback.</p>
+          <a class="btn" href="https://eventos.inema.pro/ia-cultivada/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-claude-codex">
+        <a class="cover" href="https://eventos.inema.pro/claude-codex/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Claude → Codex</b></span><img src="https://www.inema.club/doc/claude-codex-agnostico.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/claude-codex/" target="_blank" rel="noopener noreferrer">Claude → Codex</a></h3>
+          <p class="ev-sub">Migre ou fique agnóstico. Separe o cérebro do modelo — contexto, skills e handoffs portáteis. Evento INEMA 2026.</p>
+          <ul class="atalhos"><li><a href="https://inematds.github.io/curso-claude-codex/" target="_blank" rel="noopener noreferrer"><b>Curso</b><span>3 trilhas, 18 módulos: fundamentos, mão na massa e projetos</span></a></li><li><a href="https://inematds.github.io/agente-claude-codex/guia/" target="_blank" rel="noopener noreferrer"><b>Kit</b><span>doctor, audit, AGENTS.md, núcleo portátil, skills, readback</span></a></li><li><a href="/guias/claude-codex.html"><b>Tudo sobre o tema</b><span>Mapa do que dá pra fazer: skills, executores, plano em fases</span></a></li><li><a href="https://eventos.inema.pro/claude-codex/" target="_blank" rel="noopener noreferrer"><b>Evento</b><span>Área no eventos: migrar ou ficar agnóstico</span></a></li></ul>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-agi-chegou">
+        <a class="cover" href="https://eventos.inema.pro/agi-ready/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>AGI chegou</b></span><img src="https://www.inema.club/doc/agi-chegou.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/agi-ready/" target="_blank" rel="noopener noreferrer">AGI chegou</a></h3>
+          <p class="ev-sub">Não é mais sobre fazer tudo, é sobre comandar agentes. A era dos super-agentes começou.</p>
+          <a class="btn" href="https://eventos.inema.pro/agi-ready/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-content2video">
+        <a class="cover" href="https://eventos.inema.pro/content2video.html" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Content2Video</b></span><img src="https://www.inema.club/doc/content2video.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/content2video.html" target="_blank" rel="noopener noreferrer">Content2Video</a></h3>
+          <p class="ev-sub">Um link entra, um vídeo sai</p>
+          <a class="btn" href="https://eventos.inema.pro/content2video.html" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-webmcp">
+        <a class="cover" href="https://eventos.inema.pro/webmcp/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>WebMCP</b></span><img src="https://www.inema.club/doc/webmcp2.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/webmcp/" target="_blank" rel="noopener noreferrer">WebMCP</a></h3>
+          <p class="ev-sub">Evento INEMA</p>
+          <a class="btn" href="https://eventos.inema.pro/webmcp/" target="_blank" rel="noopener noreferrer">Abrir →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-musicavideo">
+        <a class="cover" href="https://eventos.inema.pro/musicavideo.html" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>INEMA MUSICAVIDEO</b></span><img src="https://www.inema.club/doc/capa-musicavideo-v2.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/musicavideo.html" target="_blank" rel="noopener noreferrer">INEMA MUSICAVIDEO</a></h3>
+          <p class="ev-sub">Crie músicas e clipes em escala, de ideia ao hit</p>
+          <a class="btn btn-pri" href="https://eventos.inema.pro/musicavideo.html" target="_blank" rel="noopener noreferrer">Conheça o MUSICAVIDEO →</a>
+        </div>
+      </article>
+      <article class="ev reveal" id="evento-destaque">
+        <a class="cover" href="https://eventos.inema.pro/inemaccbot.html" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><span class="cover-fb"><i>INEMA</i><b>Curso INEMACCBOT com Promoavatar</b></span><img src="https://www.inema.club/doc/vczero.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()"></a>
+        <div class="ev-body"><h3><a href="https://eventos.inema.pro/inemaccbot.html" target="_blank" rel="noopener noreferrer">Curso INEMACCBOT com Promoavatar</a></h3>
+          <a class="btn btn-pri" href="https://eventos.inema.pro/inemaccbot.html" target="_blank" rel="noopener noreferrer">Assista o curso →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="trilha-iniciantes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Trilha para Iniciantes</div><h2>Comece sua jornada com os cursos essenciais, nesta ordem recomendada</h2>
+      <p class="lead">Não é uma lista aleatória: é uma progressão. Você começa aprendendo a falar com a IA (FEP), vê essas habilidades em ação (ATIA), constrói a base técnica de dados (FDB) e amplia para imagens (Vision). Só então entra nas ferramentas de agente de código — Claude Code e Codex — que juntam tudo isso na prática, antes de colocar um projeto real no ar (Do Zero ao Deploy) e fechar construindo seu próprio sistema de IA (INTELECTO). Pular etapas cria lacunas: os cursos mais à frente presumem a base dos anteriores.</p></div>
+    </div>
+    <div class="steps">
+        <a class="step reveal" href="https://inematds.github.io/FEP/" target="_blank" rel="noopener noreferrer"><span class="n">01</span><h4>FEP</h4><p>Fundamentos de Engenharia de Prompts</p></a>
+        <a class="step reveal" href="https://inematds.github.io/ATIA/" target="_blank" rel="noopener noreferrer"><span class="n">02</span><h4>ATIA</h4><p>AI Tools in Action</p></a>
+        <a class="step reveal" href="https://inematds.github.io/FDB/" target="_blank" rel="noopener noreferrer"><span class="n">03</span><h4>FDB</h4><p>Fundamentos de Banco de Dados</p></a>
+        <a class="step reveal" href="https://inematds.github.io/VISION/" target="_blank" rel="noopener noreferrer"><span class="n">04</span><h4>Vision</h4><p>Processamento de Imagens com IA</p></a>
+        <a class="step reveal" href="https://inematds.github.io/ccodebasico/" target="_blank" rel="noopener noreferrer"><span class="n">05</span><h4>Claude Code Básico</h4><p>Do Zero: Instalação, Comandos, Skills, MCP e Cowork</p></a>
+        <a class="step reveal" href="https://inematds.github.io/codexbasico/" target="_blank" rel="noopener noreferrer"><span class="n">06</span><h4>Codex Básico</h4><p>Curso Completo do Codex CLI em 6 Trilhas</p></a>
+        <a class="step reveal" href="https://inematds.github.io/do-zero-ao-deploy/" target="_blank" rel="noopener noreferrer"><span class="n">07</span><h4>Do Zero ao Deploy</h4><p>Da primeira linha no terminal ao seu assistente IA</p></a>
+        <a class="step reveal" href="https://inematds.github.io/intelecto-curso/" target="_blank" rel="noopener noreferrer"><span class="n">08</span><h4>INTELECTO Curso</h4><p>Do Zero ao Expert em IA</p></a>
+        <a class="step reveal" href="https://inematds.github.io/cccompletopn/" target="_blank" rel="noopener noreferrer"><span class="n">09</span><h4>Claude Code para Pessoas Normais</h4><p>Do zero ao AI Native — segundo cérebro, sub-agentes e automações</p></a>
+        <a class="step reveal" href="https://inematds.github.io/os-agentes/guia/" target="_blank" rel="noopener noreferrer"><span class="n">10</span><h4>OS Agentes</h4><p>Construa seu OS agêntico, uma camada por vez</p></a>
+        <a class="step reveal" href="https://inematds.github.io/lives2/" target="_blank" rel="noopener noreferrer"><span class="n">11</span><h4>Lives 2026</h4><p>7 vídeos estratégicos sobre vender serviços de IA</p></a>
+        <a class="step reveal" href="https://inematds.github.io/evai2026/curso-e-live/curso/" target="_blank" rel="noopener noreferrer"><span class="n">12</span><h4>Como Montar um Negócio</h4><p>8 aulas sem programar — do primeiro cliente ao contrato</p></a>
+    </div>
+    <div class="note reveal">
+      <span>Após completar esta trilha, explore outros cursos conforme seu interesse abaixo.</span>
+      <a class="btn" href="/guias/trilha-iniciantes.html">Veja o guia com a importância de cada curso →</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap split">
+    <div class="box reveal" id="ia-do-zero">
+      <div class="eyebrow">Antes do passo 1</div>
+      <h2>Nunca usou IA? Comece pelo IA do Zero</h2>
+      <p class="lead">Sem nada técnico e sem instalar nada. Você aprende as três partes de um pedido, os quatro botões do chat, o que conferir antes de repassar, e sai com o seu próprio kit de cinco pedidos preenchido e testado. Quando terminar, o FEP 2026 mostra o que mudou na forma de pedir agora que a AGI chegou, e a trilha acima faz sentido.</p>
+      <div class="steps">
+        <a class="step reveal" href="https://inematds.github.io/ia-do-zero-curso/" target="_blank" rel="noopener noreferrer"><span class="n">00</span><h4>IA do Zero — o curso</h4><p>4 aulas de 16 a 20 min: pedir bem, usar o chat, conferir, montar o seu kit</p></a>
+        <a class="step reveal" href="https://inematds.github.io/ia-do-zero/guia/" target="_blank" rel="noopener noreferrer"><h4>IA do Zero — o kit</h4><p>20 pedidos prontos por situação, com o que você deve ver e o erro comum</p></a>
+        <a class="step reveal" href="https://inematds.github.io/FEP2026/" target="_blank" rel="noopener noreferrer"><span class="n">01</span><h4>FEP 2026</h4><p>A AGI chegou e o prompt quase morreu: o FEP reescrito técnica por técnica (7 aulas)</p></a>
+      </div>
+    </div>
+    <div class="box reveal" id="ia-cultivada">
+      <div class="eyebrow">IA Cultivada</div>
+      <p class="quote">IA não se programa, se cultiva.</p>
+      <p class="lead">Os oito elementos (função, contexto, ferramentas, regras, exemplos, memória, avaliação, feedback) aplicados à vida pessoal, ao seu Jarvis e aos negócios. Kits para baixar, gerador de ficha do agente, diagnóstico de dois minutos, skills para Claude Code e Codex, e pacotes de agentes por área. Tudo estático, sem cadastro.</p>
+      <div class="steps">
+        <a class="step reveal" href="https://inematds.github.io/iacultivada/videos/" target="_blank" rel="noopener noreferrer"><h4>Vídeo explicativo com o Nei</h4><p>10 minutos: casa × jardim, os oito elementos, os quatro níveis e por que agente não é IA cultivada</p></a>
+        <a class="step reveal" href="https://inematds.github.io/iacultivada/" target="_blank" rel="noopener noreferrer"><h4>A página do método</h4><p>Conceito, os dois níveis do cultivo, os oito elementos, o ciclo e as três aplicações com planos de 30 e 90 dias</p></a>
+        <a class="step reveal" href="https://inematds.github.io/iacultivada/kits/" target="_blank" rel="noopener noreferrer"><h4>Kits para baixar</h4><p>Pessoal, Jarvis e empresa: os cinco arquivos já estruturados, com exemplo fictício preenchido</p></a>
+        <a class="step reveal" href="https://inematds.github.io/iacultivada/gerador/" target="_blank" rel="noopener noreferrer"><h4>Gerador de ficha do agente</h4><p>Preencha seis campos e baixe ficha, contexto, exemplos, scorecard e diário de falhas</p></a>
+        <a class="step reveal" href="https://inematds.github.io/iacultivada/diagnostico/" target="_blank" rel="noopener noreferrer"><h4>Diagnóstico de cultivo</h4><p>Oito perguntas: sua nota, o estágio do jardim, por onde começar e o kit certo</p></a>
+        <a class="step reveal" href="https://github.com/inematds/iacultivada/tree/main/skills" target="_blank" rel="noopener noreferrer"><h4>Skills /cultivar e /revisao-semanal</h4><p>Para Claude Code e Codex: o agente escreve os arquivos e roda o ritual de feedback toda sexta</p></a>
+        <a class="step reveal" href="https://github.com/inematds/iacultivada/tree/main/pacotes" target="_blank" rel="noopener noreferrer"><h4>Pacotes de agentes por área</h4><p>Qualificador de leads completo, com prompt de sistema e fluxo n8n, mais atendimento, financeiro e marketing</p></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-label="Agentes e profissões">
+  <div class="wrap">
+    <a class="img-link reveal" href="https://eventos.inema.pro/agentes-hub-v.html" target="_blank" rel="noopener noreferrer">
+      <img src="https://www.inema.club/doc/inemaagenteshubv.webp" alt="Evento INEMA — Agentes Hub" loading="lazy" onerror="this.parentNode.classList.add('sem-img');this.remove()"><span class="fb">Agentes Hub — evento INEMA →</span>
+    </a>
+    <div style="margin-top:14px">
+      <a class="img-link reveal" href="https://inematds.github.io/agentes-office/" target="_blank" rel="noopener noreferrer">
+        <img src="https://www.inema.club/doc/perfis-ia-topo.webp" alt="Descubra como usar IA para evoluir na sua profissão" loading="lazy" onerror="this.parentNode.classList.add('sem-img');this.remove()"><span class="fb">Descubra como usar IA para evoluir na sua profissão →</span>
+      </a>
+      <div class="perfis">
+        <a class="img-link reveal" href="https://inematds.github.io/agentes-office/" target="_blank" rel="noopener noreferrer"><img src="https://www.inema.club/doc/perfis-ia-operacional.webp" alt="Profissional Operacional — mais produtividade com IA" loading="lazy" onerror="this.parentNode.classList.add('sem-img');this.remove()"><span class="fb">Profissional Operacional</span></a>
+        <a class="img-link reveal" href="https://inematds.github.io/agentes-office/" target="_blank" rel="noopener noreferrer"><img src="https://www.inema.club/doc/perfis-ia-empreendedor.webp" alt="Empreendedor Estratégico com IA" loading="lazy" onerror="this.parentNode.classList.add('sem-img');this.remove()"><span class="fb">Empreendedor Estratégico</span></a>
+        <a class="img-link reveal" href="https://inematds.github.io/agentes-office/" target="_blank" rel="noopener noreferrer"><img src="https://www.inema.club/doc/perfis-ia-liberal.webp" alt="Profissional Liberal Experiente com IA" loading="lazy" onerror="this.parentNode.classList.add('sem-img');this.remove()"><span class="fb">Profissional Liberal</span></a>
+        <a class="img-link reveal" href="https://inematds.github.io/agentes-office/" target="_blank" rel="noopener noreferrer"><img src="https://www.inema.club/doc/perfis-ia-gestor.webp" alt="Gestor e Líder — lidere melhor com IA" loading="lazy" onerror="this.parentNode.classList.add('sem-img');this.remove()"><span class="fb">Gestor e Líder</span></a>
+      </div>
+    </div>
+    <a class="img-link reveal" style="margin-top:14px" href="https://inema.pro" target="_blank" rel="noopener noreferrer">
+      <img src="https://www.inema.club/doc/inema-pro-banner-completo.webp" alt="INEMA.PRO — A plataforma para quem quer usar IA para crescer na prática" loading="lazy" onerror="this.parentNode.classList.add('sem-img');this.remove()"><span class="fb">INEMA.PRO — A plataforma para quem quer usar IA para crescer na prática →</span>
+    </a>
+  </div>
+</section>
+
+<section class="sec" id="trilhas">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="eyebrow">INEMA.PRO</div><h2>Trilhas de Aprendizado do INEMA.PRO</h2><p>Escolha seu caminho e avance com foco — o conteúdo completo de cada trilha está no INEMA.PRO.</p></div></div>
+    <div class="tags reveal">
+      <span class="tag">Trilha Profissional com IA</span>
+      <span class="tag">Trilha Vibe Code</span>
+      <span class="tag">Trilha Skills</span>
+      <span class="tag">Arquitetura de IA</span>
+      <span class="tag">Automação</span>
+      <span class="tag">Engenharia de Prompts</span>
+      <span class="tag">Design &amp; Visual</span>
+      <span class="tag">Robótica &amp; Humanoides</span>
+      <span class="tag">Consultoria IA &amp; Negócios</span>
+      <span class="tag">Dados &amp; IA</span>
+      <span class="tag">Desenvolvedor IA</span>
+      <span class="tag">Transformação Digital</span>
+      <span class="tag">Arquiteto de Agentes</span>
+      <span class="tag">Vídeos, Filmes e Cinema</span>
+      <span class="tag">Frameworks &amp; Assistentes</span>
+      <span class="tag">Claude Code</span>
+      <span class="tag">Agentic OS</span>
+      <span class="tag">Formação Vendas com IA</span>
+      <span class="tag">Formação inemaSEO</span>
+      <span class="tag">Formação LOOP-R Engenharia</span>
+      <span class="tag">Formação WebMCP</span>
+      <span class="tag">Formação Cinema com IA</span>
+      <span class="tag">Formação FTH — Humanoides</span>
+      <span class="tag">Formação DICA</span>
+      <span class="tag">Codex</span>
+      <span class="tag">Claude Cowork</span>
+      <span class="tag">Neurociência &amp; Futuro</span>
+      <span class="tag">Agentes Jarvis</span>
+      <span class="tag">Dados &amp; IA</span>
+    </div>
+    <div class="center"><a class="btn btn-pri" href="https://inema.pro" target="_blank" rel="noopener noreferrer">Acesse as trilhas completas no INEMA.PRO →</a></div>
+  </div>
+</section>
+
+<span id="projetos"></span>
+<section class="sec" id="comunidade">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="eyebrow">Projetos</div><h2>Projetos desenvolvidos pela INEMA — prontos para baixar e usar</h2></div></div>
+    <div class="big-num reveal">
+      <div class="num" data-count="400" data-prefix="+">+400</div>
+      <div><h3>projetos prontos para baixar e usar</h3><p>Aplicativos, agentes, skills e ferramentas construídos pela comunidade INEMA, com código e guia de uso.</p></div>
+      <a class="btn btn-pri" href="https://inema.pro" target="_blank" rel="noopener noreferrer">Ver os projetos no INEMA.PRO →</a>
+    </div>
+  </div>
+</section>
+
+<section class="motto reveal" aria-label="Lema">
+  <div class="wrap"><p>Crie sua equipe. <span>Lidere o futuro.</span></p></div>
+</section>
+
+<section class="sec" id="telegram">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="eyebrow">Telegram</div><h2>Grupos e Canais Telegram</h2><p>Junte-se à nossa comunidade de aprendizado.</p></div></div>
+    <!-- Os links dos grupos não estão no HTML do site atual (são div sem href). Coloque o t.me de cada um aqui. -->
+    <div class="tg reveal">
+      <span>INEMA.VIP - Recepção</span>
+      <span>INEMA.ADULTO</span>
+      <span>INEMA.AGENTES</span>
+      <span>INEMA.AVATARES</span>
+      <span>BMAD - Método</span>
+      <span>INEMA.CCODE</span>
+      <span>INEMA.CODEX</span>
+      <span>INEMA.CONSULT</span>
+      <span>INEMA.CPA</span>
+      <span>INEMA.DEV</span>
+      <span>INEMA.EDUC</span>
+      <span>INEMA.FTD</span>
+      <span>INEMA.GAMES</span>
+      <span>INEMA.GOOGLE</span>
+      <span>INEMA.IA</span>
+      <span>INEMA.IMAGENS</span>
+      <span>INEMA.INFRA</span>
+      <span>INEMA.LLMs</span>
+      <span>INEMA.Make</span>
+      <span>INEMA.MKT</span>
+      <span>INEMA.MUSICAL</span>
+      <span>INEMA.N8N</span>
+      <span>INEMA.NCIA</span>
+      <span>INEMA.PLUS</span>
+      <span>INEMA.Prompts</span>
+      <span>INEMA.ROBOT</span>
+      <span>INEMA.TDS</span>
+      <span>INEMA.TIA</span>
+      <span>INEMA.TOOLS</span>
+      <span>INEMA.VIBE</span>
+      <span>INEMA.VIDEOS</span>
+      <span>INEMA.VISION</span>
+      <span>INEMA.VOZ</span>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <a class="vip reveal" href="https://inema.vip" target="_blank" rel="noopener noreferrer">
+      <span class="vip-logo"><img src="https://www.inema.club/doc/conviteinemap.webp" alt="INEMA.VIP - Você foi convidado para a comunidade" loading="lazy" onerror="this.parentNode.textContent='VIP'"></span>
+      <div><h2>INEMA.VIP</h2><p>Um espaço de autoaprendizado e transformação com IA e Humanoides</p></div>
+      <span class="btn btn-pri">Faça seu Cadastro →</span>
+    </a>
+  </div>
+</section>
+
+<section class="sec" id="social">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="eyebrow">Redes</div><h2>Redes Sociais INEMA</h2><p>Siga-nos nas principais plataformas.</p></div></div>
+    <div class="soc">
+      <div class="panel reveal"><h3>TikTok</h3><div class="soc-links"><a href="https://www.tiktok.com/@inema.tds" target="_blank" rel="noopener noreferrer">@inema.tds</a><a href="https://www.tiktok.com/@inema.tia" target="_blank" rel="noopener noreferrer">@inema.tia</a><a href="https://www.tiktok.com/@inemafuturos" target="_blank" rel="noopener noreferrer">@inemafuturos</a><a href="https://www.tiktok.com/@inema.tech" target="_blank" rel="noopener noreferrer">@inema.tech</a><a href="https://www.tiktok.com/@inema.prompts" target="_blank" rel="noopener noreferrer">@inema.prompts</a><a href="https://www.tiktok.com/@inema.robot" target="_blank" rel="noopener noreferrer">@inema.robot</a><a href="https://www.tiktok.com/@inema.vip" target="_blank" rel="noopener noreferrer">@inema.vip</a></div></div>
+      <div class="panel reveal"><h3>Instagram</h3><div class="soc-links"><a href="https://www.instagram.com/inema.tds" target="_blank" rel="noopener noreferrer">@inema.tds</a><a href="https://www.instagram.com/inema.tia" target="_blank" rel="noopener noreferrer">@inema.tia</a><a href="https://www.instagram.com/inema.vip" target="_blank" rel="noopener noreferrer">@inema.vip</a></div></div>
+      <div class="panel reveal"><h3>YouTube</h3><div class="soc-links"><a href="https://www.youtube.com/@inematdsx" target="_blank" rel="noopener noreferrer">@inematdsx</a><a href="https://www.youtube.com/@inematia" target="_blank" rel="noopener noreferrer">@inematia</a><a href="https://www.youtube.com/@inemaftd" target="_blank" rel="noopener noreferrer">@inemaftd</a><a href="https://www.youtube.com/@inematec" target="_blank" rel="noopener noreferrer">@inematec</a></div></div>
+      <div class="panel reveal"><h3>Facebook</h3><div class="soc-links"><a href="https://www.facebook.com/inemafuturos" target="_blank" rel="noopener noreferrer">inemafuturos</a><a href="https://www.facebook.com/inematds" target="_blank" rel="noopener noreferrer">inematds</a></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <nav aria-label="Hubs"><a href="/cursos/">Cursos</a><a href="/eventos/">Eventos</a><a href="/noticias/">News</a><a href="/videos/">Vídeos</a></nav>
+    <nav aria-label="Guias"><span class="lbl">Guias:</span><a href="/aprender-inteligencia-artificial/">Aprender IA</a><a href="/agentes-de-inteligencia-artificial/">Agentes de IA</a><a href="/comunidade-inteligencia-artificial/">Comunidade de IA</a><a href="/ia/">Perguntas sobre IA</a></nav>
+    <p>© 2025 Portal INEMA. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<div class="dock" aria-label="Atalhos">
+  <a class="btn" href="#busca-titulo" id="dock-busca">Buscar cursos</a>
+  <a class="btn btn-pri" href="https://pay.inema.pro" target="_blank" rel="noopener noreferrer">Assine o INEMA.PRO</a>
+</div>
+
+<script>
+(function(){
+  var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var itens = [].slice.call(document.querySelectorAll('.reveal'));
+  function contar(el){
+    var alvo = +el.getAttribute('data-count'), pre = el.getAttribute('data-prefix')||'';
+    var fmt = function(n){return pre + n.toLocaleString('pt-BR');};
+    if(reduz){el.textContent = fmt(alvo);return;}
+    var t0 = null, dur = 900;
+    function passo(t){ if(!t0) t0=t; var p=Math.min(1,(t-t0)/dur); el.textContent = fmt(Math.round(alvo*(1-Math.pow(1-p,3)))); if(p<1) requestAnimationFrame(passo); else el.classList.add('glow'); }
+    requestAnimationFrame(passo);
+  }
+  if(reduz || !('IntersectionObserver' in window)){
+    itens.forEach(function(e){e.classList.add('in');});
+  } else {
+    var io = new IntersectionObserver(function(ents){
+      var lote = 0;
+      ents.forEach(function(en){
+        if(!en.isIntersecting) return;
+        var el = en.target; io.unobserve(el);
+        setTimeout(function(){el.classList.add('in');}, 60*lote++);
+      });
+    },{rootMargin:'0px 0px -8% 0px'});
+    itens.forEach(function(e){io.observe(e);});
+  }
+  // contadores sobem quando aparecem
+  var nums = [].slice.call(document.querySelectorAll('[data-count]'));
+  if('IntersectionObserver' in window){
+    var io2 = new IntersectionObserver(function(ents){ents.forEach(function(en){ if(en.isIntersecting){io2.unobserve(en.target);contar(en.target);} });});
+    nums.forEach(function(n){io2.observe(n);});
+  }
+  // menu: destaca a seção visível
+  var links = [].slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  if('IntersectionObserver' in window){
+    var io3 = new IntersectionObserver(function(ents){
+      ents.forEach(function(en){ if(en.isIntersecting){ links.forEach(function(a){a.classList.toggle('on', a.getAttribute('href')==='#'+en.target.id);}); } });
+    },{rootMargin:'-45% 0px -50% 0px'});
+    links.forEach(function(a){var s=document.querySelector(a.getAttribute('href')); if(s) io3.observe(s);});
+  }
+  // barra do celular: "Buscar cursos" leva ao campo e já foca
+  var db = document.getElementById('dock-busca');
+  if(db) db.addEventListener('click', function(ev){
+    ev.preventDefault();
+    var i = document.getElementById('home-course-search');
+    i.scrollIntoView({behavior: reduz?'auto':'smooth', block:'center'});
+    setTimeout(function(){ i.focus({preventScroll:true}); }, reduz?0:400);
+  });
+})();
+</script>
+</body>
+</html>
